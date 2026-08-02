@@ -10,21 +10,23 @@ permissions:
   contents: read
 
 jobs:
-  build:
-    name: Build & Test
+  test:
+    name: Test (Node ${{ matrix.node-version }})
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         node-version: [18, 20, 22]
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        # Pin to specific SHA for security (OpenSSF Scorecard: Pinned-Dependencies)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
 
       - name: Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
@@ -45,21 +47,21 @@ jobs:
         run: npm run build
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
         with:
-          name: build-${{ matrix.node-version }}
+          name: build-node-${{ matrix.node-version }}
           path: lib/
           retention-days: 7
 
-  security:
+  security-audit:
     name: Security Audit
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
         with:
           node-version: '20'
           cache: 'npm'
@@ -70,9 +72,9 @@ jobs:
       - name: Run npm audit
         run: npm audit --audit-level=high
 
-  publish:
-    name: Publish to npm
-    needs: [build, security]
+  publish-dry-run:
+    name: Publish Dry Run
+    needs: [test, security-audit]
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     permissions:
@@ -80,10 +82,10 @@ jobs:
       id-token: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
         with:
           node-version: '20'
           cache: 'npm'
@@ -95,7 +97,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Publish to npm (dry-run)
+      - name: Publish (dry-run)
         run: npm publish --dry-run
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

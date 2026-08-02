@@ -1,0 +1,20 @@
+# CODEOWNERS — GitHub will request reviews from these owners automatically
+# when a PR modifies the matched files.
+# See: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Global fallback — qalvinahmad reviews everything
+* @qalvinahmad
+
+# Core SDK — most critical, always require review
+/lib/src/core/ @qalvinahmad
+/lib/index.js @qalvinahmad
+
+# Security-sensitive files
+SECURITY.md @qalvinahmad
+.github/workflows/ @qalvinahmad
+.github/dependabot.yml @qalvinahmad
+
+# Governance docs
+LICENSE @qalvinahmad
+CONTRIBUTING.md @qalvinahmad
+CHANGELOG.md @qalvinahmad

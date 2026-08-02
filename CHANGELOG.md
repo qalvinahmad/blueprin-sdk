@@ -5,44 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - 2026-08-02
+## [Unreleased]
 
 ### Added
+- Pinned all GitHub Actions to specific commit SHAs (supply chain security)
+- Added OpenSSF Scorecard workflow (`scorecard.yml`)
+- Added dependency review workflow (`dependency-review.yml`)
+- Added Dependabot configuration for automated dependency updates
+- Added `CODEOWNERS` file requiring review on security-sensitive files
+- Added issue templates (Bug Report, Feature Request)
+- Added Pull Request template
 
-- **Production Ready Release**
-  - Complete plugin system with lifecycle management
-  - Event bus for inter-plugin communication
-  - Hook registry for extending functionality
-  - Storage adapter with localStorage + Supabase hybrid storage
-  - Full TypeScript support with generated type definitions
-  - CJS, ESM, and UMD build outputs
-  - 41 passing tests across core and domain modules
-
-- **Security**
-  - SECURITY.md vulnerability reporting policy
-  - npm audit integration in CI/CD
-  - SSR guards for Next.js compatibility
-  - Input validation in storage adapters
-
-- **Documentation**
-  - Comprehensive README with badges and API reference
-  - Contributing guidelines
-  - Changelog following Keep a Changelog format
-  - GitHub Actions CI workflow
-
-### Changed
-
-- Migrated from JavaScript to TypeScript-first development
-- Updated build system to generate CJS/ESM/.d.ts for all subpath exports
-- Improved SSR compatibility across all modules
-
-### Fixed
-
-- Config injection in PluginManager
-- Storage adapter SSR guard for server environments
-- Build script overwrite conflicts
-
-## [0.1.0] - 2026-08-02
+## [1.0.0] - 2026-08-02
 
 ### Added
 
@@ -50,48 +24,62 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `BlueprinSDK` main class with plugin, event, hook, and storage management
   - `PluginManager` for plugin lifecycle (register, activate, deactivate, remove)
   - `EventBus` for pub/sub inter-plugin communication
-  - `HookRegistry` for before/after lifecycle hooks
-  - `StorageAdapter` with localStorage + Supabase hybrid storage
-  - `ConfigManager` for plugin configuration
-  - `Logger` with debug support
+  - `HookRegistry` for before/after lifecycle hooks with priority support
+  - `StorageAdapter` with localStorage + Supabase hybrid storage and SSR guards
+  - `ConfigManager` for plugin configuration with localStorage persistence
+  - `Logger` with debug support and configurable prefix
   - `definePlugin`, `defineConnector`, `defineExtension` helpers
 
 - **Domain Modules**
-  - `ProjectClient` - Project CRUD operations
-  - `MaterialClient` - Material management with categories
-  - `RabClient` - RAB (budget) calculation and expansion
-  - `ScheduleClient` - Project scheduling with 13 construction phases
-  - `MarketplaceClient` - Partners, products, RFQ, and orders
-  - `AuthClient` - Supabase authentication wrapper
+  - `ProjectClient` — Project CRUD with hooks integration
+  - `MaterialClient` — Material management with categories
+  - `RabClient` — RAB (budget) calculation, expansion to materials/labor/equipment
+  - `ScheduleClient` — Project scheduling with 13 construction phases
+  - `MarketplaceClient` — Partners, products, RFQ, and orders
+  - `AuthClient` — Supabase authentication wrapper with event emission
 
 - **Connector SDK**
-  - `BaseConnector` abstract class
-  - `ConnectorRegistry` for managing connectors
+  - `BaseConnector` abstract class with lifecycle (connect, disconnect, test)
+  - `ConnectorRegistry` for managing multiple connectors
 
 - **UI Components**
-  - `BlueprintButton` - Primary action button
-  - `BlueprintCard` - Content container
-  - `BlueprintBadge` - Status badge
-  - `BlueprintInput` - Form input
-  - `BlueprintSelect` - Dropdown select
-  - `BlueprintTable` - Data table
-  - `BlueprintModal` - Dialog/modal
-  - `BlueprintToast` - Toast notification
-  - `BlueprintSkeleton` - Loading skeleton
+  - `BlueprintButton` — Action button with variants (primary, secondary, danger, ghost)
+  - `BlueprintCard` — Content container with elevation variants
+  - `BlueprintBadge` — Status badge (default, success, warning, error, info)
+  - `BlueprintInput` — Form input with validation state
+  - `BlueprintSelect` — Dropdown select
+  - `BlueprintTable` — Data table with custom renderers
+  - `BlueprintModal` — Dialog/modal with backdrop
+  - `BlueprintToast` — Toast notification with auto-dismiss
+  - `BlueprintSkeleton` — Loading skeleton (text, title, avatar, card variants)
+
+- **Hook Helpers**
+  - `createHook` — Type-safe hook handler creator
+  - `HookPatterns` — Reusable patterns (logger, validator, transformer, rateLimit)
 
 - **Utilities**
-  - `formatIDR` - Indonesian Rupiah formatting
-  - `formatDate` - Indonesian date formatting
-  - `formatRelativeTime` - Relative time in Indonesian
-  - `cn` - Class name merging
-  - `generateId`, `debounce`, `deepClone`, `pick`, `omit`
+  - `formatIDR` — Indonesian Rupiah formatting via `Intl.NumberFormat`
+  - `formatDate` — Indonesian date formatting
+  - `formatRelativeTime` — Relative time in Indonesian (e.g. "2 jam lalu")
+  - `cn` — Lightweight class name merging (like clsx)
+  - `generateId` — UUID v4 via `crypto.randomUUID()`
+  - `debounce`, `deepClone` (via `structuredClone`), `pick`, `omit`
+
+- **CI/CD & Governance**
+  - GitHub Actions CI pipeline (Node 18/20/22 matrix, build, test, security audit)
+  - Release workflow with npm provenance attestation
+  - `SECURITY.md` with responsible disclosure policy
+  - `CONTRIBUTING.md` with development setup and commit conventions
+  - `CODEOWNERS` for mandatory code review
+  - OpenSSF Scorecard integration
+  - Dependabot for automated dependency updates
 
 - **Examples**
-  - Hello Plugin - Simplest plugin example
-  - RAB Generator - AI-powered RAB generation
-  - WhatsApp Sync - WhatsApp notifications
-  - Material Connector - Supplier integration
-  - Custom Report - Report generation
+  - Hello Plugin — Simplest plugin example
+  - RAB Generator — AI-powered RAB generation
+  - WhatsApp Sync — WhatsApp notifications
+  - Material Connector — Supplier integration
+  - Custom Report — Report generation
 
 - **Documentation**
   - Getting Started guide
@@ -102,3 +90,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Connector guide
   - Testing guide
   - Publishing guide
+
+## [0.1.0] - 2026-08-02
+
+### Added
+- Initial release of `@blueprin/sdk`
+- Core architecture: `PluginManager`, `EventBus`, `HookRegistry`, `StorageAdapter`
+- All domain modules, UI components, and utilities (see v1.0.0 for full list)
+
+[Unreleased]: https://github.com/qalvinahmad/blueprin-sdk/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/qalvinahmad/blueprin-sdk/compare/v0.1.0...v1.0.0
+[0.1.0]: https://github.com/qalvinahmad/blueprin-sdk/releases/tag/v0.1.0
