@@ -14,3 +14,7 @@ lib/*/index.js.map
 lib/*/index.mjs
 lib/*/index.mjs.map
 lib/*/index.d.ts
+
+# Unignore source files in lib/src
+!lib/src/
+!lib/src/**

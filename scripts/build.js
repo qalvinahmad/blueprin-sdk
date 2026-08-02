@@ -91,14 +91,14 @@ async function buildAll() {
   // Build main entry
   await build({
     ...COMMON_OPTIONS,
-    entryPoints: [join(ROOT, 'lib', 'index.js')],
+    entryPoints: [join(SRC, 'index.js')],
     format: 'cjs',
     outfile: join(OUT, 'index.js'),
   });
 
   await build({
     ...COMMON_OPTIONS,
-    entryPoints: [join(ROOT, 'lib', 'index.js')],
+    entryPoints: [join(SRC, 'index.js')],
     format: 'esm',
     outfile: join(OUT, 'index.mjs'),
   });
