@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-08-02
+
+### Fixed
+- OpenSSF Scorecard token permissions and pinned dependency hashes
+- Safe `generateId()` fallback for Node 18 environments
+- Added CodeQL SAST scanning workflow
+
 ### Added
 - Pinned all GitHub Actions to specific commit SHAs (supply chain security)
 - Added OpenSSF Scorecard workflow (`scorecard.yml`)
