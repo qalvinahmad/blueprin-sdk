@@ -1,0 +1,110 @@
+{
+  "name": "@blueprin/sdk",
+  "version": "0.1.0",
+  "description": "Official SDK for building plugins, connectors, extensions and integrations for Blueprin",
+  "main": "lib/index.js",
+  "module": "lib/index.mjs",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/index.mjs",
+      "require": "./lib/index.js",
+      "types": "./lib/index.d.ts"
+    },
+    "./core": {
+      "import": "./lib/core/index.mjs",
+      "require": "./lib/core/index.js"
+    },
+    "./hooks": {
+      "import": "./lib/hooks/index.mjs",
+      "require": "./lib/hooks/index.js"
+    },
+    "./events": {
+      "import": "./lib/events/index.mjs",
+      "require": "./lib/events/index.js"
+    },
+    "./ui": {
+      "import": "./lib/ui/index.mjs",
+      "require": "./lib/ui/index.js"
+    },
+    "./connector": {
+      "import": "./lib/connector/index.mjs",
+      "require": "./lib/connector/index.js"
+    },
+    "./storage": {
+      "import": "./lib/storage/index.mjs",
+      "require": "./lib/storage/index.js"
+    },
+    "./project": {
+      "import": "./lib/project/index.mjs",
+      "require": "./lib/project/index.js"
+    },
+    "./material": {
+      "import": "./lib/material/index.mjs",
+      "require": "./lib/material/index.js"
+    },
+    "./rab": {
+      "import": "./lib/rab/index.mjs",
+      "require": "./lib/rab/index.js"
+    },
+    "./schedule": {
+      "import": "./lib/schedule/index.mjs",
+      "require": "./lib/schedule/index.js"
+    },
+    "./marketplace": {
+      "import": "./lib/marketplace/index.mjs",
+      "require": "./lib/marketplace/index.js"
+    }
+  },
+  "files": [
+    "lib/",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint lib/",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "blueprin",
+    "sdk",
+    "plugin",
+    "connector",
+    "construction",
+    "budgeting",
+    "rab",
+    "material",
+    "marketplace"
+  ],
+  "author": "qalvinahmad",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qalvinahmad/blueprin-sdk"
+  },
+  "homepage": "https://github.com/qalvinahmad/blueprin-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/qalvinahmad/blueprin-sdk/issues"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.1",
+    "typescript": "^5.8.3",
+    "esbuild": "^0.25.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
+  }
+}
