@@ -76,8 +76,8 @@
     "build": "node scripts/build.js",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "eslint lib/",
     "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
@@ -102,9 +102,9 @@
     "url": "https://github.com/qalvinahmad/blueprin-sdk/issues"
   },
   "devDependencies": {
-    "vitest": "^3.2.1",
+    "esbuild": "^0.25.0",
     "typescript": "^5.8.3",
-    "esbuild": "^0.25.0"
+    "vitest": "^3.2.1"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
