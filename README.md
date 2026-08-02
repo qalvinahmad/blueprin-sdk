@@ -13,17 +13,17 @@ The official SDK for building **plugins**, **connectors**, **extensions** and **
 ## Installation
 
 ```bash
-npm install @blueprin/sdk
+npm install @alvinahmad/blueprin-sdk
 # or
-pnpm add @blueprin/sdk
+pnpm add @alvinahmad/blueprin-sdk
 # or
-yarn add @blueprin/sdk
+yarn add @alvinahmad/blueprin-sdk
 ```
 
 ## Quick Start
 
 ```javascript
-import { BlueprinSDK } from '@blueprin/sdk';
+import { BlueprinSDK } from '@alvinahmad/blueprin-sdk';
 
 const sdk = new BlueprinSDK({
   appId: 'my-app',
@@ -41,7 +41,7 @@ console.log(sdk.getInfo());
 ## First Plugin
 
 ```javascript
-import { definePlugin } from '@blueprin/sdk';
+import { definePlugin } from '@alvinahmad/blueprin-sdk';
 
 export default definePlugin({
   id: 'my-first-plugin',
@@ -177,7 +177,7 @@ npm install
 ## Connector SDK
 
 ```javascript
-import { BaseConnector } from '@blueprin/sdk';
+import { BaseConnector } from '@alvinahmad/blueprin-sdk';
 
 class MyConnector extends BaseConnector {
   static protocol = 'rest';
@@ -206,7 +206,7 @@ import {
   BlueprintBadge,
   BlueprintTable,
   BlueprintInput,
-} from '@blueprin/sdk/ui';
+} from '@alvinahmad/blueprin-sdk/ui';
 
 // Use in your plugin UI
 const button = BlueprintButton({ variant: 'primary', children: 'Click Me' });
