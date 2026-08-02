@@ -53,9 +53,13 @@ jobs:
 
       - name: Create or Update GitHub Release
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        env:
+          RELEASE_TAG: ${{ steps.version.outputs.tag }}
+          RELEASE_NOTES: ${{ steps.changelog.outputs.notes }}
         with:
           script: |
-            const tag = '${{ steps.version.outputs.tag }}';
+            const tag = process.env.RELEASE_TAG;
+            const body = process.env.RELEASE_NOTES || ('Release ' + tag);
             const isPrerelease = tag.includes('-rc') || tag.includes('-beta') || tag.includes('-alpha');
             try {
               const { data: existing } = await github.rest.repos.getReleaseByTag({
@@ -70,7 +74,7 @@ jobs:
                 repo: context.repo.repo,
                 tag_name: tag,
                 name: tag,
-                body: `${{ steps.changelog.outputs.notes }}`,
+                body: body,
                 draft: false,
                 prerelease: isPrerelease,
               });
