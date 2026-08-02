@@ -1,5 +1,13 @@
 # Blueprin SDK
 
+[![CI Build & Test](https://github.com/qalvinahmad/blueprin-sdk/actions/workflows/ci.yml/badge.svg)](https://github.com/qalvinahmad/blueprin-sdk/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/@blueprin/sdk.svg)](https://www.npmjs.com/package/@blueprin/sdk)
+[![npm downloads](https://img.shields.io/npm/dm/@blueprin/sdk.svg)](https://www.npmjs.com/package/@blueprin/sdk)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/qalvinahmad/blueprin-sdk/badge)](https://api.securityscorecards.dev/projects/github.com/qalvinahmad/blueprin-sdk)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Security Policy](https://img.shields.io/badge/Security-Security%20Policy-blue)](SECURITY.md)
+
 The official SDK for building **plugins**, **connectors**, **extensions** and **integrations** for [Blueprin](https://blueprin.app) — the professional architectural budgeting platform for construction in Indonesia.
 
 ## Installation
@@ -78,6 +86,17 @@ git clone https://github.com/qalvinahmad/blueprint_plugin_template my-plugin
 cd my-plugin
 npm install
 ```
+
+## Features
+
+- **Plugin System** — Register, activate, deactivate, and manage plugins with lifecycle hooks
+- **Event Bus** — Pub/sub system for inter-plugin communication
+- **Hook Registry** — Before/after lifecycle hooks for extending functionality
+- **Storage Adapter** — localStorage + Supabase hybrid storage with SSR guards
+- **Domain Clients** — Project, Material, RAB, Schedule, Marketplace, and Auth modules
+- **UI Components** — React components for building plugin interfaces
+- **Connector SDK** — Build integrations with external services
+- **TypeScript Support** — Full type definitions included
 
 ## API Reference
 
@@ -194,6 +213,14 @@ const button = BlueprintButton({ variant: 'primary', children: 'Click Me' });
 const card = BlueprintCard({ children: 'Hello World' });
 const badge = BlueprintBadge({ variant: 'success', children: 'Active' });
 ```
+
+## Security
+
+For security concerns, please see our [Security Policy](SECURITY.md).
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ## Documentation
 

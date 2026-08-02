@@ -5,6 +5,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2026-08-02
+
+### Added
+
+- **Production Ready Release**
+  - Complete plugin system with lifecycle management
+  - Event bus for inter-plugin communication
+  - Hook registry for extending functionality
+  - Storage adapter with localStorage + Supabase hybrid storage
+  - Full TypeScript support with generated type definitions
+  - CJS, ESM, and UMD build outputs
+  - 41 passing tests across core and domain modules
+
+- **Security**
+  - SECURITY.md vulnerability reporting policy
+  - npm audit integration in CI/CD
+  - SSR guards for Next.js compatibility
+  - Input validation in storage adapters
+
+- **Documentation**
+  - Comprehensive README with badges and API reference
+  - Contributing guidelines
+  - Changelog following Keep a Changelog format
+  - GitHub Actions CI workflow
+
+### Changed
+
+- Migrated from JavaScript to TypeScript-first development
+- Updated build system to generate CJS/ESM/.d.ts for all subpath exports
+- Improved SSR compatibility across all modules
+
+### Fixed
+
+- Config injection in PluginManager
+- Storage adapter SSR guard for server environments
+- Build script overwrite conflicts
+
 ## [0.1.0] - 2026-08-02
 
 ### Added
