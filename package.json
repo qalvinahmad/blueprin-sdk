@@ -7,51 +7,62 @@
   "types": "lib/index.d.ts",
   "exports": {
     ".": {
+      "types": "./lib/index.d.ts",
       "import": "./lib/index.mjs",
-      "require": "./lib/index.js",
-      "types": "./lib/index.d.ts"
+      "require": "./lib/index.js"
     },
     "./core": {
+      "types": "./lib/core/index.d.ts",
       "import": "./lib/core/index.mjs",
       "require": "./lib/core/index.js"
     },
     "./hooks": {
+      "types": "./lib/hooks/index.d.ts",
       "import": "./lib/hooks/index.mjs",
       "require": "./lib/hooks/index.js"
     },
     "./events": {
+      "types": "./lib/events/index.d.ts",
       "import": "./lib/events/index.mjs",
       "require": "./lib/events/index.js"
     },
     "./ui": {
+      "types": "./lib/ui/index.d.ts",
       "import": "./lib/ui/index.mjs",
       "require": "./lib/ui/index.js"
     },
     "./connector": {
+      "types": "./lib/connector/index.d.ts",
       "import": "./lib/connector/index.mjs",
       "require": "./lib/connector/index.js"
     },
     "./storage": {
+      "types": "./lib/storage/index.d.ts",
       "import": "./lib/storage/index.mjs",
       "require": "./lib/storage/index.js"
     },
     "./project": {
+      "types": "./lib/project/index.d.ts",
       "import": "./lib/project/index.mjs",
       "require": "./lib/project/index.js"
     },
     "./material": {
+      "types": "./lib/material/index.d.ts",
       "import": "./lib/material/index.mjs",
       "require": "./lib/material/index.js"
     },
     "./rab": {
+      "types": "./lib/rab/index.d.ts",
       "import": "./lib/rab/index.mjs",
       "require": "./lib/rab/index.js"
     },
     "./schedule": {
+      "types": "./lib/schedule/index.d.ts",
       "import": "./lib/schedule/index.mjs",
       "require": "./lib/schedule/index.js"
     },
     "./marketplace": {
+      "types": "./lib/marketplace/index.d.ts",
       "import": "./lib/marketplace/index.mjs",
       "require": "./lib/marketplace/index.js"
     }
