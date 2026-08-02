@@ -102,7 +102,11 @@
     "url": "https://github.com/qalvinahmad/blueprin-sdk/issues"
   },
   "devDependencies": {
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
     "esbuild": "^0.25.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "typescript": "^5.8.3",
     "vitest": "^3.2.1"
   },
