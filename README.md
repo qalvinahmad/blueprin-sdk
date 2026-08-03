@@ -7,6 +7,17 @@
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/qalvinahmad/blueprin-sdk/badge)](https://api.securityscorecards.dev/projects/github.com/qalvinahmad/blueprin-sdk)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![Security Policy](https://img.shields.io/badge/Security-Security%20Policy-blue)](SECURITY.md)
+[![Last Commit](https://img.shields.io/github/last-commit/qalvinahmad/blueprin-sdk)](https://github.com/qalvinahmad/blueprin-sdk/commits/main)
+![Languages](https://img.shields.io/badge/Languages-11_Supported-blue)
+
+**Platforms:** 
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=flat&logo=windows&logoColor=white) ![macOS](https://img.shields.io/badge/macOS-000000?style=flat&logo=apple&logoColor=white) ![Android](https://img.shields.io/badge/Android-3DDC84?style=flat&logo=android&logoColor=white) ![iOS](https://img.shields.io/badge/iOS-000000?style=flat&logo=ios&logoColor=white)
+
+<br/>
+<div align="center">
+  <img src="https://drive.google.com/uc?export=view&id=1QKFSHyeVr75XTAiYaz7UYojd16srcj6R" alt="Blueprin App" width="100%" />
+</div>
+<br/>
 
 The official SDK for building **plugins**, **connectors**, **extensions** and **integrations** for [Blueprin](https://blueprin.app) — the professional architectural budgeting platform for construction in Indonesia.
 
