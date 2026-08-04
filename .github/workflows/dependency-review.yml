@@ -18,9 +18,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
+      - name: Check if dependency graph is enabled
+        id: check-deps
+        run: |
+          if gh api repos/${{ github.repository }}/dependency-graph 2>/dev/null; then
+            echo "enabled=true" >> $GITHUB_OUTPUT
+          else
+            echo "enabled=false" >> $GITHUB_OUTPUT
+            echo "::warning::Dependency graph is not enabled. Skipping dependency review."
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Dependency Review
+        if: steps.check-deps.outputs.enabled == 'true'
         uses: actions/dependency-review-action@3b139cfc5fae8b618d3eae3675e383bb1769c019 # v4.5.0
         with:
           fail-on-severity: high
           comment-summary-in-pr: always
-          warn-only: true
