@@ -11,7 +11,7 @@ npm test
 
 ```javascript
 import { describe, it, expect, beforeEach } from 'vitest';
-import { BlueprinSDK, definePlugin } from '@blueprin/sdk';
+import { BlueprinSDK, definePlugin } from '@alvinahmad/blueprin-sdk';
 
 describe('My Plugin', () => {
   let sdk;

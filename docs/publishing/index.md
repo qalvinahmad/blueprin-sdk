@@ -12,7 +12,7 @@ Your plugin should be an npm package:
   "main": "index.js",
   "keywords": ["blueprin", "plugin"],
   "peerDependencies": {
-    "@blueprin/sdk": ">=0.1.0"
+    "@alvinahmad/blueprin-sdk": ">=0.1.0"
   }
 }
 ```
@@ -29,26 +29,53 @@ npm publish --access public
 
 ## Publishing to Blueprin Marketplace
 
-1. Create a GitHub repository for your plugin
-2. Add the `blueprin-plugin` topic to your repo
-3. Fill in the plugin metadata in `package.json`:
+Blueprin now supports automated marketplace submissions directly via the SDK. You can build a UI element in your plugin to publish itself, or use a script during your CI/CD pipeline.
 
-```json
-{
-  "blueprin": {
-    "type": "plugin",
-    "id": "my-plugin",
-    "minSdkVersion": "0.1.0",
-    "category": "productivity",
-    "icons": {
-      "128": "./icon.png"
-    },
-    "screenshots": ["./screenshot.png"]
-  }
-}
+### Step 1: Prepare Manifest
+
+Ensure your `package.json` contains valid metadata and your `definePlugin` manifest has `author` and `description` defined:
+
+```javascript
+export default definePlugin({
+  id: 'my-plugin',
+  name: 'My Plugin',
+  version: '1.0.0',
+  author: 'your-name',
+  description: 'A great plugin'
+  // ...
+});
 ```
 
-4. Submit a PR to the [awesome-blueprint](https://github.com/qalvinahmad/awesome-blueprint) repository
+### Step 2: Trigger Submission
+
+Your plugin (if it has `storage:write` and `events:emit` permissions) or the host application can trigger the submission:
+
+```javascript
+// Triggers validation and the pre-submission hook
+const payload = await sdk.plugins.submitToMarketplace('my-plugin');
+```
+
+### Step 3: Pre-submission Hook (Optional)
+
+If you need to sign your code or inject compiled assets before it hits the database, register a listener for `blueprin:before:plugin:submit`:
+
+```javascript
+ctx.hooks.register('blueprin:before:plugin:submit', (payload) => {
+  payload.signature = myCryptoLibrary.sign(payload.manifest);
+  return payload;
+});
+```
+
+### Step 4: Host App Upload
+
+The SDK does not talk to Supabase/REST APIs directly to keep the bundle small. Instead, it emits an event. The Blueprin Host Application listens to this event and performs the final upload:
+
+```javascript
+// (This happens in the host app, not your plugin)
+sdk.events.on('blueprin:marketplace:plugin:submitted', async (payload) => {
+  await supabase.from('marketplace_plugins').insert(payload);
+});
+```
 
 ## Versioning
 

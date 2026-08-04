@@ -7,7 +7,7 @@
  * - Using storage for notification logs
  */
 
-import { definePlugin, defineConnector } from '@blueprin/sdk';
+import { definePlugin, defineConnector } from '@alvinahmad/blueprin-sdk';
 
 /**
  * WhatsApp Connector using the BaseConnector pattern

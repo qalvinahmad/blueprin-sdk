@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **WorkforceClient**: Added new domain module for managing construction workers, daily/hourly rates, logging attendance, and calculating period-based wages & overtime.
+- **Runtime Sandboxing**: Enforced a `200ms` execution timeout on all Hook executions (`hook-registry`) to prevent host-app freezing or infinite loops from malicious plugins.
+- **CLI Scaffolding**: Introduced `create-blueprin-plugin` CLI package to auto-generate boilerplate plugin structures with TypeScript and Vitest pre-configured.
+- **Connector Framework**: Added `BaseConnector` classes to allow plugins to register 3rd-party integrations to the `ConnectorRegistry`.
+- **UI Components**: Documented 9 core React UI components in the README for consistent plugin styling.
+- **TypeScript Migration**: Fully migrated the SDK to TypeScript with `strict: true` validation for robust developer experience and type autocomplete.
+
+### Changed
+- Improved `ReportClient` with data generator bindings and custom layout templates.
+- Explicitly documented the `React >= 18.0.0` peer-dependency requirement in the README for UI Plugins.
 ## [1.0.1] - 2026-08-02
 
 ### Fixed
@@ -101,7 +112,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2026-08-02
 
 ### Added
-- Initial release of `@blueprin/sdk`
+- Initial release of `@alvinahmad/blueprin-sdk`
 - Core architecture: `PluginManager`, `EventBus`, `HookRegistry`, `StorageAdapter`
 - All domain modules, UI components, and utilities (see v1.0.0 for full list)
 

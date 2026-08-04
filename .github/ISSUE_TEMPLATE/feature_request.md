@@ -16,7 +16,7 @@ A clear and concise description of what you want to happen.
 ## Example API / Usage
 ```javascript
 // How would the feature be used?
-import { newFeature } from '@blueprin/sdk';
+import { newFeature } from '@alvinahmad/blueprin-sdk';
 // ...
 ```
 
