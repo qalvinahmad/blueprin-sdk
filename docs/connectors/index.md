@@ -5,7 +5,7 @@ Connectors bridge Blueprin with external services (WhatsApp, accounting software
 ## Creating a Connector
 
 ```javascript
-import { defineConnector } from '@blueprin/sdk';
+import { defineConnector } from '@alvinahmad/blueprin-sdk';
 
 export default defineConnector({
   id: 'xero-connector',
@@ -37,7 +37,7 @@ export default defineConnector({
 For more control, extend `BaseConnector`:
 
 ```javascript
-import { BaseConnector } from '@blueprin/sdk';
+import { BaseConnector } from '@alvinahmad/blueprin-sdk';
 
 class FingerprintConnector extends BaseConnector {
   static protocol = 'rest';
@@ -79,7 +79,7 @@ class FingerprintConnector extends BaseConnector {
 ## Connector Registry
 
 ```javascript
-import { ConnectorRegistry } from '@blueprin/sdk';
+import { ConnectorRegistry } from '@alvinahmad/blueprin-sdk';
 
 const registry = new ConnectorRegistry({ storage: sdk.storage });
 

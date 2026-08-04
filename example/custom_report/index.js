@@ -7,7 +7,7 @@
  * - Export to multiple formats
  */
 
-import { definePlugin } from '@blueprin/sdk';
+import { definePlugin } from '@alvinahmad/blueprin-sdk';
 
 export default definePlugin({
   id: 'custom-report',

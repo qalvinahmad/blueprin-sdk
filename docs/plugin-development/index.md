@@ -5,7 +5,7 @@
 A Blueprin plugin is a JavaScript module that exports a manifest object:
 
 ```javascript
-import { definePlugin } from '@blueprin/sdk';
+import { definePlugin } from '@alvinahmad/blueprin-sdk';
 
 export default definePlugin({
   // Required
@@ -13,11 +13,21 @@ export default definePlugin({
   name: 'My Plugin',
   version: '1.0.0',
 
-  // Optional
+  // Optional Metadata
   description: 'What my plugin does',
   author: 'your-name',
-  dependencies: [],
-  config: {},
+  
+  // Dependencies (Plugin IDs required before this plugin activates)
+  dependencies: ['core-plugin', 'rab-advanced'],
+  
+  // Permissions (Requested access scopes)
+  permissions: ['storage:write', 'rab:read'],
+
+  // UI Entry Points (Rendered by host app)
+  ui: {
+    menus: [{ label: 'My Settings', path: '/settings/my-plugin', icon: 'gear' }],
+    panels: [{ id: 'dashboard-widget', component: 'DashboardWidget' }]
+  },
 
   // Required: activation function
   activate(ctx) {

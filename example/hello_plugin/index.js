@@ -4,7 +4,7 @@
  * This example demonstrates the basics of creating a plugin.
  */
 
-import { definePlugin } from '@blueprin/sdk';
+import { definePlugin } from '@alvinahmad/blueprin-sdk';
 
 export default definePlugin({
   id: 'hello-plugin',

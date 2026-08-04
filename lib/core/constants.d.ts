@@ -1,0 +1,104 @@
+/**
+ * Blueprin SDK Constants
+ */
+export declare const PLUGIN_LIFECYCLE: {
+    REGISTERED: string;
+    INITIALIZING: string;
+    READY: string;
+    ACTIVE: string;
+    SUSPENDED: string;
+    ERROR: string;
+    DESTROYED: string;
+};
+export declare const PLUGIN_STATUS: {
+    INSTALLED: string;
+    ENABLED: string;
+    DISABLED: string;
+    UPDATING: string;
+};
+export declare const CONNECTOR_STATUS: {
+    DISCONNECTED: string;
+    CONNECTING: string;
+    CONNECTED: string;
+    ERROR: string;
+};
+export declare const EVENT_NAMES: {
+    PLUGIN_REGISTERED: string;
+    PLUGIN_INITIALIZED: string;
+    PLUGIN_ACTIVATED: string;
+    PLUGIN_DEACTIVATED: string;
+    PLUGIN_REMOVED: string;
+    PROJECT_CREATED: string;
+    PROJECT_UPDATED: string;
+    PROJECT_DELETED: string;
+    PROJECT_ARCHIVED: string;
+    MATERIAL_CREATED: string;
+    MATERIAL_UPDATED: string;
+    MATERIAL_DELETED: string;
+    MATERIAL_IMPORTED: string;
+    RAB_ITEM_ADDED: string;
+    RAB_ITEM_UPDATED: string;
+    RAB_ITEM_REMOVED: string;
+    RAB_EXPANDED: string;
+    RAB_CALCULATED: string;
+    SCHEDULE_GENERATED: string;
+    SCHEDULE_UPDATED: string;
+    TASK_CREATED: string;
+    TASK_UPDATED: string;
+    TASK_COMPLETED: string;
+    ORDER_CREATED: string;
+    ORDER_UPDATED: string;
+    ORDER_COMPLETED: string;
+    RFQ_RECEIVED: string;
+    RFQ_QUOTED: string;
+    PARTNER_REGISTERED: string;
+    PARTNER_VERIFIED: string;
+    COLLABORATOR_ADDED: string;
+    COLLABORATOR_REMOVED: string;
+    PRESENCE_UPDATE: string;
+    SIDEBAR_TOGGLE: string;
+    MODAL_OPEN: string;
+    MODAL_CLOSE: string;
+    THEME_CHANGED: string;
+    TOAST_SHOW: string;
+    AUTH_SIGNED_IN: string;
+    AUTH_SIGNED_OUT: string;
+    AUTH_SESSION_REFRESHED: string;
+};
+export declare const HOOK_NAMES: {
+    BEFORE_PROJECT_CREATE: string;
+    AFTER_PROJECT_CREATE: string;
+    BEFORE_PROJECT_UPDATE: string;
+    AFTER_PROJECT_UPDATE: string;
+    BEFORE_PROJECT_DELETE: string;
+    AFTER_PROJECT_DELETE: string;
+    BEFORE_MATERIAL_CREATE: string;
+    AFTER_MATERIAL_CREATE: string;
+    BEFORE_MATERIAL_UPDATE: string;
+    AFTER_MATERIAL_UPDATE: string;
+    BEFORE_RAB_CALCULATE: string;
+    AFTER_RAB_CALCULATE: string;
+    BEFORE_RAB_EXPAND: string;
+    AFTER_RAB_EXPAND: string;
+    BEFORE_GENERATE_QUOTES: string;
+    AFTER_GENERATE_QUOTES: string;
+    BEFORE_SCHEDULE_GENERATE: string;
+    AFTER_SCHEDULE_GENERATE: string;
+    BEFORE_TASK_COMPLETE: string;
+    AFTER_TASK_COMPLETE: string;
+    BEFORE_ORDER_CREATE: string;
+    AFTER_ORDER_CREATE: string;
+    BEFORE_CHECKOUT: string;
+    AFTER_CHECKOUT: string;
+    BEFORE_EXPORT: string;
+    AFTER_EXPORT: string;
+    CUSTOMIZE_REPORT: string;
+};
+export declare const STORAGE_KEYS: {
+    PLUGINS: string;
+    CONFIG: string;
+    CONNECTORS: string;
+};
+export declare const MAX_PLUGIN_NAME_LENGTH = 64;
+export declare const MAX_PLUGIN_DESCRIPTION_LENGTH = 512;
+export declare const PLUGIN_API_VERSION = "1.0.0";

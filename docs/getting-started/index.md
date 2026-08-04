@@ -8,13 +8,13 @@
 ## Installation
 
 ```bash
-npm install @blueprin/sdk
+npm install @alvinahmad/blueprin-sdk
 ```
 
 ## Basic Setup
 
 ```javascript
-import { BlueprinSDK } from '@blueprin/sdk';
+import { BlueprinSDK } from '@alvinahmad/blueprin-sdk';
 
 // Initialize the SDK
 const sdk = new BlueprinSDK({
@@ -30,7 +30,7 @@ await sdk.init();
 ## Registering a Plugin
 
 ```javascript
-import { definePlugin } from '@blueprin/sdk';
+import { definePlugin } from '@alvinahmad/blueprin-sdk';
 
 await sdk.plugins.register(
   definePlugin({

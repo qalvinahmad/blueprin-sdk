@@ -8,6 +8,7 @@ Thank you for your interest in contributing to the Blueprin SDK!
 git clone https://github.com/qalvinahmad/blueprin-sdk.git
 cd blueprin-sdk
 npm install
+npm run build
 ```
 
 ## Project Structure
@@ -61,7 +62,7 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/):
 1. Create a feature branch from `main`
 2. Make your changes
 3. Add tests if applicable
-4. Run `npm test` and `npm run lint`
+4. Run `npm run build` then `npm test` and `npm run lint`
 5. Submit a PR with a clear description
 
 ## Code Style

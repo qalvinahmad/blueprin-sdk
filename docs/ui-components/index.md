@@ -20,7 +20,7 @@ Blueprin SDK provides lightweight UI components that follow the Blueprin Design 
 ### BlueprintButton
 
 ```javascript
-import { BlueprintButton } from '@blueprin/sdk/ui';
+import { BlueprintButton } from '@alvinahmad/blueprin-sdk/ui';
 
 // Variants: primary, secondary, danger, ghost
 // Sizes: sm, md, lg
@@ -36,7 +36,7 @@ BlueprintButton({
 ### BlueprintCard
 
 ```javascript
-import { BlueprintCard } from '@blueprin/sdk/ui';
+import { BlueprintCard } from '@alvinahmad/blueprin-sdk/ui';
 
 // Variants: default, elevated, outlined
 
@@ -50,7 +50,7 @@ BlueprintCard({
 ### BlueprintBadge
 
 ```javascript
-import { BlueprintBadge } from '@blueprin/sdk/ui';
+import { BlueprintBadge } from '@alvinahmad/blueprin-sdk/ui';
 
 // Variants: default, success, warning, error, info
 // Sizes: sm, md
@@ -64,7 +64,7 @@ BlueprintBadge({
 ### BlueprintInput
 
 ```javascript
-import { BlueprintInput } from '@blueprin/sdk/ui';
+import { BlueprintInput } from '@alvinahmad/blueprin-sdk/ui';
 
 BlueprintInput({
   label: 'Nama Material',
@@ -78,7 +78,7 @@ BlueprintInput({
 ### BlueprintSelect
 
 ```javascript
-import { BlueprintSelect } from '@blueprin/sdk/ui';
+import { BlueprintSelect } from '@alvinahmad/blueprin-sdk/ui';
 
 BlueprintSelect({
   label: 'Kategori',
@@ -95,7 +95,7 @@ BlueprintSelect({
 ### BlueprintTable
 
 ```javascript
-import { BlueprintTable } from '@blueprin/sdk/ui';
+import { BlueprintTable } from '@alvinahmad/blueprin-sdk/ui';
 
 BlueprintTable({
   columns: [
@@ -111,7 +111,7 @@ BlueprintTable({
 ### BlueprintModal
 
 ```javascript
-import { BlueprintModal } from '@blueprin/sdk/ui';
+import { BlueprintModal } from '@alvinahmad/blueprin-sdk/ui';
 
 BlueprintModal({
   open: isOpen,
@@ -124,7 +124,7 @@ BlueprintModal({
 ### BlueprintToast
 
 ```javascript
-import { BlueprintToast } from '@blueprin/sdk/ui';
+import { BlueprintToast } from '@alvinahmad/blueprin-sdk/ui';
 
 BlueprintToast({
   type: 'success',
@@ -136,7 +136,7 @@ BlueprintToast({
 ### BlueprintSkeleton
 
 ```javascript
-import { BlueprintSkeleton } from '@blueprin/sdk/ui';
+import { BlueprintSkeleton } from '@alvinahmad/blueprin-sdk/ui';
 
 // Variants: text, title, avatar, card
 

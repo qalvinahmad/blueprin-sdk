@@ -7,7 +7,7 @@
  * - Using events to notify other plugins
  */
 
-import { definePlugin } from '@blueprin/sdk';
+import { definePlugin } from '@alvinahmad/blueprin-sdk';
 
 export default definePlugin({
   id: 'rab-generator-pro',

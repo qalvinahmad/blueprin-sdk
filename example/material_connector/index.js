@@ -7,7 +7,7 @@
  * - Batch operations
  */
 
-import { definePlugin, defineConnector } from '@blueprin/sdk';
+import { definePlugin, defineConnector } from '@alvinahmad/blueprin-sdk';
 
 /**
  * Supplier Material Connector

@@ -11,7 +11,7 @@ A clear and concise description of what the bug is.
 
 ## To Reproduce
 Steps to reproduce the behavior:
-1. Install `@blueprin/sdk` version `x.y.z`
+1. Install `@alvinahmad/blueprin-sdk` version `x.y.z`
 2. Call `...`
 3. See error
 
@@ -24,12 +24,12 @@ What actually happens.
 ## Code Sample
 ```javascript
 // Minimal reproducible example
-import { BlueprinSDK } from '@blueprin/sdk';
+import { BlueprinSDK } from '@alvinahmad/blueprin-sdk';
 // ...
 ```
 
 ## Environment
-- **SDK version**: `@blueprin/sdk@x.y.z`
+- **SDK version**: `@alvinahmad/blueprin-sdk@x.y.z`
 - **Node.js version**: `v20.x`
 - **Framework**: Next.js / Vite / other
 - **OS**: macOS / Linux / Windows

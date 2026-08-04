@@ -98,7 +98,7 @@ ctx.hooks.register(hookName, handler, { priority: 10 });
 ### Validation
 
 ```javascript
-import { HookPatterns } from '@blueprin/sdk';
+import { HookPatterns } from '@alvinahmad/blueprin-sdk';
 
 ctx.hooks.register(
   'blueprin:before:rab:calculate',

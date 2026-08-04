@@ -3,14 +3,19 @@
     "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "allowJs": true,
-    "checkJs": true,
-    "noEmit": true,
-    "strict": false,
     "esModuleInterop": true,
+    "strict": true,
+    "noImplicitAny": false,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "declarationDir": "./lib",
+    "rootDir": "./lib/src",
+    "jsx": "react-jsx",
+    "outDir": "./lib",
+    "allowJs": true
   },
   "include": ["lib/src/**/*"],
-  "exclude": ["node_modules", "lib/index.js", "lib/index.mjs", "lib/*/*.js", "lib/*/*.mjs"]
+  "exclude": ["node_modules", "dist", "example"]
 }

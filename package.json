@@ -65,6 +65,16 @@
       "types": "./lib/marketplace/index.d.ts",
       "import": "./lib/marketplace/index.mjs",
       "require": "./lib/marketplace/index.js"
+    },
+    "./report": {
+      "types": "./lib/report/index.d.ts",
+      "import": "./lib/report/index.mjs",
+      "require": "./lib/report/index.js"
+    },
+    "./workforce": {
+      "types": "./lib/workforce/index.d.ts",
+      "import": "./lib/workforce/index.mjs",
+      "require": "./lib/workforce/index.js"
     }
   },
   "files": [
@@ -74,6 +84,7 @@
   ],
   "scripts": {
     "build": "node scripts/build.js",
+    "pretest": "npm run build",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
@@ -122,5 +133,8 @@
     "react-dom": {
       "optional": true
     }
+  },
+  "dependencies": {
+    "glob": "^13.0.6"
   }
 }
