@@ -12,7 +12,7 @@
 [![Snyk Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/@alvinahmad%2Fblueprin-sdk.svg)](https://snyk.io/test/npm/@alvinahmad/blueprin-sdk)
 [![Dependabot](https://img.shields.io/badge/Dependabot-enabled-brightgreen.svg?logo=dependabot&logoColor=white)](https://github.com/qalvinahmad/blueprin-sdk/network/updates)
 [![Code Coverage](https://img.shields.io/codecov/c/github/qalvinahmad/blueprin-sdk?logo=codecov&logoColor=white)](https://codecov.io/gh/qalvinahmad/blueprin-sdk)
-[![Code Quality](https://img.shields.io/codefactor/grade/github/qalvinahmad/blueprin-sdk?logo=codefactor&logoColor=white)](https://www.codefactor.io/github.com/qalvinahmad/blueprin-sdk)
+[![Code Quality](https://img.shields.io/codefactor/grade/github/qalvinahmad/blueprin-sdk?logo=codefactor&logoColor=white)](https://www.codefactor.io/repository/github/qalvinahmad/blueprin-sdk/overview/main)
 [![Security Policy](https://img.shields.io/badge/Security-Security%20Policy-blue)](SECURITY.md)
 
 [![GitHub Stars](https://img.shields.io/github/stars/qalvinahmad/blueprin-sdk?style=social)](https://github.com/qalvinahmad/blueprin-sdk)
