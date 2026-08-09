@@ -101,4 +101,4 @@ export declare const STORAGE_KEYS: {
 };
 export declare const MAX_PLUGIN_NAME_LENGTH = 64;
 export declare const MAX_PLUGIN_DESCRIPTION_LENGTH = 512;
-export declare const PLUGIN_API_VERSION = "1.0.0";
+export declare const PLUGIN_API_VERSION = "1.0.1";

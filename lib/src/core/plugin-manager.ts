@@ -62,7 +62,7 @@ export class PluginManager {
     this._plugins.set(id, plugin);
     await this._persistPlugins();
 
-    this._eventBus.emit('blueprin:plugin:registered', { pluginId: id, manifest });
+    await this._eventBus.emit('blueprin:plugin:registered', { pluginId: id, manifest });
 
     return plugin;
   }
@@ -89,20 +89,20 @@ export class PluginManager {
     }
 
     plugin.status = PLUGIN_LIFECYCLE.INITIALIZING;
-    this._eventBus.emit('blueprin:plugin:initializing', { pluginId });
+    await this._eventBus.emit('blueprin:plugin:initializing', { pluginId });
 
     try {
       const context = this._createPluginContext(pluginId);
       plugin.instance = await plugin.manifest.activate(context);
       plugin.status = PLUGIN_LIFECYCLE.ACTIVE;
 
-      this._eventBus.emit('blueprin:plugin:activated', { pluginId, instance: plugin.instance });
+      await this._eventBus.emit('blueprin:plugin:activated', { pluginId, instance: plugin.instance });
       this._logger.info(`Plugin "${pluginId}" activated`);
 
       return plugin.instance;
     } catch (error) {
       plugin.status = PLUGIN_LIFECYCLE.ERROR;
-      this._eventBus.emit('blueprin:plugin:error', { pluginId, error });
+      await this._eventBus.emit('blueprin:plugin:error', { pluginId, error });
       this._logger.error(`Plugin "${pluginId}" activation failed:`, error);
       throw error;
     }
@@ -130,7 +130,7 @@ export class PluginManager {
       plugin.status = PLUGIN_LIFECYCLE.SUSPENDED;
       plugin.instance = null;
 
-      this._eventBus.emit('blueprin:plugin:deactivated', { pluginId });
+      await this._eventBus.emit('blueprin:plugin:deactivated', { pluginId });
       this._logger.info(`Plugin "${pluginId}" deactivated (listeners & hooks cleaned up)`);
     } catch (error) {
       this._logger.error(`Plugin "${pluginId}" deactivation failed:`, error);
@@ -143,7 +143,7 @@ export class PluginManager {
     this._plugins.delete(pluginId);
     await this._persistPlugins();
 
-    this._eventBus.emit('blueprin:plugin:removed', { pluginId });
+    await this._eventBus.emit('blueprin:plugin:removed', { pluginId });
     this._logger.info(`Plugin "${pluginId}" removed`);
   }
 
@@ -339,9 +339,15 @@ export class PluginManager {
   }
 
   async _persistPlugins() {
-    const data = {};
+    const data: Record<string, any> = {};
     for (const [id, plugin] of this._plugins) {
-      data[id] = plugin.manifest;
+      const serializable: Record<string, any> = {};
+      for (const [key, value] of Object.entries(plugin.manifest)) {
+        if (typeof value !== 'function') {
+          serializable[key] = value;
+        }
+      }
+      data[id] = serializable;
     }
     await this._storage.set(STORAGE_KEYS.PLUGINS, data);
   }
