@@ -24,7 +24,7 @@ describe('BlueprinSDK', () => {
   });
 
   it('should initialize', () => {
-    expect(sdk.version).toBe('1.0.0');
+    expect(sdk.version).toBe('1.0.1');
     expect(sdk.getInfo().initialized).toBe(true);
   });
 
