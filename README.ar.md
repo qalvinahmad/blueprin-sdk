@@ -26,7 +26,7 @@
 ![npm](https://img.shields.io/npm/v/@alvinahmad/blueprin-sdk?style=flat&logo=npm&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-5.8+-3178C6?style=flat&logo=typescript&logoColor=white) ![Module](https://img.shields.io/badge/Module-ESM%20%2B%20CJS-blueviolet?style=flat) ![Node](https://img.shields.io/badge/Node-%3E%3D18-339933?style=flat&logo=node.js&logoColor=white)
 
 **Languages:**
-[![English](https://img.shields.io/badge/English-0052CC?style=flat)](README.md) [![Bahasa Indonesia](https://img.shields.io/badge/Bahasa_Indonesia-FF0000?style=flat)](README.id.md) [![العربية](https://img.shields.io/badge/العربية-000000?style=flat&label=You%20are%20here)](README.ar.md) [![日本語](https://img.shields.io/badge/日本語-BC002D?style=flat)](README.ja.md) [![한국어](https://img.shields.io/badge/한국어-003478?style=flat)](README.ko.md) [![中文](https://img.shields.io/badge/中文-DE2910?style=flat)](README.zh.md) [![Français](https://img.shields.io/badge/Fran%C3%A7ais-0052CC?style=flat)](README.fr.md) [![Español](https://img.shields.io/badge/Espa%C3%B1ol-D80027?style=flat)](README.es.md) [![Deutsch](https://img.shields.io/badge/Deutsch-000000?style=flat)](README.de.md) [![Português](https://img.shields.io/badge/Portugu%C3%AAs-009B3A?style=flat)](README.pt.md) [![Русский](https://img.shields.io/badge/%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9-0039A6?style=flat)](README.ru.md)
+[![English](https://img.shields.io/badge/English-0052CC?style=flat)](README.md) [![Bahasa Indonesia](https://img.shields.io/badge/Bahasa_Indonesia-FF0000?style=flat)](README.id.md) [![Arabic](https://img.shields.io/badge/Arabic-000000?style=flat&label=You%20are%20here)](README.ar.md) [![日本語](https://img.shields.io/badge/日本語-BC002D?style=flat)](README.ja.md) [![한국어](https://img.shields.io/badge/한국어-003478?style=flat)](README.ko.md) [![中文](https://img.shields.io/badge/中文-DE2910?style=flat)](README.zh.md) [![Français](https://img.shields.io/badge/Fran%C3%A7ais-0052CC?style=flat)](README.fr.md) [![Español](https://img.shields.io/badge/Espa%C3%B1ol-D80027?style=flat)](README.es.md) [![Deutsch](https://img.shields.io/badge/Deutsch-000000?style=flat)](README.de.md) [![Português](https://img.shields.io/badge/Portugu%C3%AAs-009B3A?style=flat)](README.pt.md) [![Русский](https://img.shields.io/badge/%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9-0039A6?style=flat)](README.ru.md)
 
 </div>
 
@@ -35,6 +35,8 @@
   <img src="https://drive.google.com/uc?export=view&id=1QKFSHyeVr75XTAiYaz7UYojd16srcj6R" alt="Blueprin App" width="100%" />
 </div>
 <br/>
+
+<div dir="rtl" align="right">
 
 SDK الرسمي لبناء **الإضافات** وال**موصلات** و**الامتدادات** و**التكاملات** لـ [Blueprin](blueprin-app.vercel.app) — منصة ميزانية معمارية احترافية للبناء في إندونيسيا.
 
@@ -51,6 +53,8 @@ SDK الرسمي لبناء **الإضافات** وال**موصلات** و**ال
 - **TypeScript أولاً** — تعريفات Types كاملة ودعم ESM/CJS
 
 ## الهيكلية
+
+</div>
 
 ```
                     +---------------------+
@@ -80,7 +84,11 @@ SDK الرسمي لبناء **الإضافات** وال**موصلات** و**ال
                     +---------------------+
 ```
 
+<div dir="rtl" align="right">
+
 ## التثبيت
+
+</div>
 
 ```bash
 npm install @alvinahmad/blueprin-sdk
@@ -90,7 +98,11 @@ pnpm add @alvinahmad/blueprin-sdk
 yarn add @alvinahmad/blueprin-sdk
 ```
 
+<div dir="rtl" align="right">
+
 ## البدء السريع
+
+</div>
 
 ```javascript
 import { BlueprinSDK } from '@alvinahmad/blueprin-sdk';
@@ -108,7 +120,11 @@ console.log(sdk.getInfo());
 // { version: '1.0.1', plugins: 0, hooks: 0, events: 0, initialized: true }
 ```
 
+<div dir="rtl" align="right">
+
 ## أنشئ إضافتك الأولى
+
+</div>
 
 ```javascript
 import { definePlugin } from '@alvinahmad/blueprin-sdk';
@@ -142,7 +158,11 @@ export default definePlugin({
 });
 ```
 
+<div dir="rtl" align="right">
+
 أو قم بإنشاء إضافة جديدة باستخدام CLI الرسمي:
+
+</div>
 
 ```bash
 npx create-blueprin-plugin my-plugin
@@ -151,7 +171,11 @@ npm install
 npm run dev
 ```
 
-## ما الم included
+<div dir="rtl" align="right">
+
+## ما المُرفق
+
+</div>
 
 ```
 @alvinahmad/blueprin-sdk
@@ -179,13 +203,19 @@ npm run dev
     └── BlueprintButton, BlueprintCard, ...  @alvinahmad/blueprin-sdk/ui
 ```
 
+<div dir="rtl" align="right">
+
 جميع الوحدات تدعم tree-shaking ومتاحة كاستيرادات فرعية:
+
+</div>
 
 ```javascript
 import { BlueprinSDK } from '@alvinahmad/blueprin-sdk';
 import { definePlugin } from '@alvinahmad/blueprin-sdk/core';
 import { ProjectClient } from '@alvinahmad/blueprin-sdk/project';
 ```
+
+<div dir="rtl" align="right">
 
 ## الميزات
 
@@ -202,6 +232,8 @@ import { ProjectClient } from '@alvinahmad/blueprin-sdk/project';
 
 تعمل إضافات Blueprin تحت أذونات تتحكم فيها التطبيق المضيف.
 
+</div>
+
 | القدرة | الافتراضي | التحكم المضيف |
 |---|---|---|
 | تنفيذ الإضافات | مفعّل | تتحكم دورة الحياة (تفعيل/تعطيل) |
@@ -210,11 +242,15 @@ import { ProjectClient } from '@alvinahmad/blueprin-sdk/project';
 | التخزين | مقيد | تتحكم فيه الوحدة (localStorage أو Supabase) |
 | عرض واجهة المستخدم | مفعّل | React sandbox، بدون وصول DOM مباشر |
 
+<div dir="rtl" align="right">
+
 الإضافات **لا يمكنها** الوصول إلى الشبكات الخارجية ما لم تتم إضافتها إلى القائمة البيضاء بشكل صريح من قِبَل التطبيق المضيف. جميع عمليات تنفيذ الخطافات لها مهلة صلبة 200ms لمنع الحلقات اللانهائية أو حظر واجهة المستخدم.
 
 للإبلاغ عن الثغرات الأمنية، راجع [سياسة الأمان](SECURITY.md).
 
 ## الأمثلة
+
+</div>
 
 | المثال | الوصف |
 |---------|-------|
@@ -223,6 +259,8 @@ import { ProjectClient } from '@alvinahmad/blueprin-sdk/project';
 | [WhatsApp Sync](example/whatsapp_sync/) | إشعارات WhatsApp |
 | [Material Connector](example/material_connector/) | مزامنة الموردين |
 | [Custom Report](example/custom_report/) | إنشاء التقارير |
+
+<div dir="rtl" align="right">
 
 ## التوثيق
 
@@ -262,3 +300,5 @@ MIT © [qalvinahmad](https://github.com/qalvinahmad)
 ---
 
 > قد تتأخر الترجمات عن التوثيق الإنجليزي. ملف README بالإنجليزية هو المصدر الرسمي.
+
+</div>
