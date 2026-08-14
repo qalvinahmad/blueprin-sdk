@@ -9,7 +9,8 @@
 [![Last Commit](https://img.shields.io/github/last-commit/qalvinahmad/blueprin-sdk?date=iso&color=blue)](https://github.com/qalvinahmad/blueprin-sdk/commits/main)
 [![Latest Release](https://img.shields.io/github/v/release/qalvinahmad/blueprin-sdk)](https://github.com/qalvinahmad/blueprin-sdk/releases)
 
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/qalvinahmad/blueprin-sdk/badge)](https://api.securityscorecards.dev/projects/github.com/qalvinahmad/blueprin-sdk)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/qalvinahmad/blueprin-sdk/badge)](https://securityscorecards.dev/details/?repo=github.com/qalvinahmad/blueprin-sdk)
+[![OpenSSF Criticality](https://img.shields.io/badge/Criticality%20Score-0.37%2F1-blue?label=criticality%20score&style=flat)](https://github.com/ossf/criticality_score#criticality-score) <!-- Updated: 2026-08-14 -->
 [![Code Quality](https://img.shields.io/codefactor/grade/github/qalvinahmad/blueprin-sdk?logo=codefactor&logoColor=white)](https://www.codefactor.io/repository/github/qalvinahmad/blueprin-sdk/overview/main)
 [![Security Policy](https://img.shields.io/badge/Security-Security%20Policy-blue)](SECURITY.md)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org/)
