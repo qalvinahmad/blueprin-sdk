@@ -75,6 +75,11 @@
       "types": "./lib/workforce/index.d.ts",
       "import": "./lib/workforce/index.mjs",
       "require": "./lib/workforce/index.js"
+    },
+    "./telemetry": {
+      "types": "./lib/telemetry/index.d.ts",
+      "import": "./lib/telemetry/index.mjs",
+      "require": "./lib/telemetry/index.js"
     }
   },
   "engines": {

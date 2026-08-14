@@ -18,6 +18,14 @@ export { HookRegistry } from './core/hook-registry.js';
 export { StorageAdapter } from './core/storage-adapter.js';
 export { Logger } from './core/logger.js';
 export { ConfigManager } from './core/config-manager.js';
+export {
+  TelemetryManager,
+  type TelemetryEventPayload,
+  type TelemetryTrackOptions,
+  type TelemetryHandler,
+  type ScopedTelemetry,
+  type TelemetryManagerOptions,
+} from './telemetry/index.js';
 
 // Plugin definitions
 export { definePlugin, defineConnector, defineExtension } from './core/plugin-def.js';
@@ -89,6 +97,9 @@ export type {
   ConnectorProtocol,
   ConnectorStatus,
   ConnectorConfig,
+  // Telemetry
+  TelemetryLifecycle,
+  TelemetryContext,
 } from './types/index.js';
 
 // Validation schemas

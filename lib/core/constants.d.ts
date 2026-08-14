@@ -64,6 +64,7 @@ export declare const EVENT_NAMES: {
     AUTH_SIGNED_IN: string;
     AUTH_SIGNED_OUT: string;
     AUTH_SESSION_REFRESHED: string;
+    TELEMETRY_TRACK: string;
 };
 export declare const HOOK_NAMES: {
     BEFORE_PROJECT_CREATE: string;
@@ -93,6 +94,8 @@ export declare const HOOK_NAMES: {
     BEFORE_EXPORT: string;
     AFTER_EXPORT: string;
     CUSTOMIZE_REPORT: string;
+    BEFORE_TELEMETRY_TRACK: string;
+    AFTER_TELEMETRY_TRACK: string;
 };
 export declare const STORAGE_KEYS: {
     PLUGINS: string;

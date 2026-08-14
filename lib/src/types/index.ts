@@ -348,3 +348,12 @@ export interface ConnectorConfig {
   timeout?: number;
   headers?: Record<string, string>;
 }
+
+// ─── Telemetry ────────────────────────────────────────────────────────────────
+
+export type TelemetryLifecycle = 'track' | 'enable' | 'disable' | 'handler_added' | 'handler_removed';
+
+export interface TelemetryContext {
+  track: (eventName: string, payload?: Record<string, any>) => Promise<any>;
+  isEnabled: () => boolean;
+}
