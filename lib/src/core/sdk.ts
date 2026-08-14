@@ -11,6 +11,7 @@ import { ConfigManager } from './config-manager.js';
 import { ReportClient } from '../report/index.js';
 import { PLUGIN_API_VERSION } from './constants.js';
 import { ConnectorRegistry } from '../connector/index.js';
+import { TelemetryManager } from '../telemetry/telemetry-manager.js';
 import { WorkforceClient } from '../workforce/index.js';
 import { ProjectClient } from '../project/index.js';
 import { MaterialClient } from '../material/index.js';
@@ -35,6 +36,7 @@ export class BlueprinSDK {
   private _schedule: any;
   private _marketplace: any;
   private _auth: any;
+  private _telemetry: any;
   private _initialized: any;
 
   constructor(options: any = {}) {
@@ -45,6 +47,7 @@ export class BlueprinSDK {
       storagePrefix = 'blueprin_sdk',
       debug = false,
       supabaseClient,
+      telemetryEnabled = true,
       // Backward-compatible aliases (used by main app plugin-host-context)
       apiUrl,
       config,
@@ -68,6 +71,11 @@ export class BlueprinSDK {
     });
     this._eventBus = new EventBus({ logger: this._logger });
     this._hookRegistry = new HookRegistry({ logger: this._logger });
+    this._telemetry = new TelemetryManager({
+      logger: this._logger,
+      appId,
+      enabled: telemetryEnabled,
+    });
     this._pluginManager = new PluginManager({
       sdk: this,
       eventBus: this._eventBus,
@@ -75,6 +83,7 @@ export class BlueprinSDK {
       storage: this._storage,
       logger: this._logger,
       config: this._config,
+      telemetry: this._telemetry,
     });
     this._report = new ReportClient({
       hooks: this._hookRegistry,
@@ -123,6 +132,22 @@ export class BlueprinSDK {
       supabaseClient,
     });
     this._initialized = false;
+    this._setupLifecycleTelemetry();
+  }
+
+  _setupLifecycleTelemetry() {
+    this._eventBus.on('blueprin:plugin:registered', (data) => {
+      this._telemetry.track('plugin_registered', { pluginId: data.pluginId, manifest: data.manifest }, { pluginId: data.pluginId });
+    });
+    this._eventBus.on('blueprin:plugin:activated', (data) => {
+      this._telemetry.track('plugin_activated', { pluginId: data.pluginId }, { pluginId: data.pluginId });
+    });
+    this._eventBus.on('blueprin:plugin:deactivated', (data) => {
+      this._telemetry.track('plugin_deactivated', { pluginId: data.pluginId }, { pluginId: data.pluginId });
+    });
+    this._eventBus.on('blueprin:plugin:error', (data) => {
+      this._telemetry.track('plugin_error', { pluginId: data.pluginId, error: data.error?.message || String(data.error) }, { pluginId: data.pluginId });
+    });
   }
 
   get version() {
@@ -151,6 +176,10 @@ export class BlueprinSDK {
 
   get logger() {
     return this._logger;
+  }
+
+  get telemetry() {
+    return this._telemetry;
   }
 
   get reports() {

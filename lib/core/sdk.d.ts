@@ -17,8 +17,10 @@ export declare class BlueprinSDK {
     private _schedule;
     private _marketplace;
     private _auth;
+    private _telemetry;
     private _initialized;
     constructor(options?: any);
+    _setupLifecycleTelemetry(): void;
     get version(): string;
     get plugins(): any;
     get events(): any;
@@ -26,6 +28,7 @@ export declare class BlueprinSDK {
     get storage(): any;
     get config(): any;
     get logger(): any;
+    get telemetry(): any;
     get reports(): any;
     get connectors(): any;
     get workforce(): any;

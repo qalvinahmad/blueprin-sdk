@@ -12,6 +12,7 @@ export { HookRegistry } from './hook-registry.js';
 export { StorageAdapter } from './storage-adapter.js';
 export { Logger } from './logger.js';
 export { ConfigManager } from './config-manager.js';
+export { TelemetryManager } from '../telemetry/index.js';
 
 export {
   definePlugin,

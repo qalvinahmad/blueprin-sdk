@@ -11,16 +11,18 @@ export class PluginManager {
   private _storage: any;
   private _logger: any;
   private _config: any;
+  private _telemetry: any;
   private _plugins: any;
   private _uiSlots: any;
   private _uiPages: any;
-  constructor({ sdk, eventBus, hookRegistry, storage, logger, config }) {
+  constructor({ sdk, eventBus, hookRegistry, storage, logger, config, telemetry }) {
     this._sdk = sdk;
     this._eventBus = eventBus;
     this._hookRegistry = hookRegistry;
     this._storage = storage;
     this._logger = logger;
     this._config = config;
+    this._telemetry = telemetry;
     this._plugins = new Map();
     this._uiSlots = new Map();
     this._uiPages = new Map();
@@ -262,6 +264,7 @@ export class PluginManager {
   _createPluginContext(pluginId) {
     const plugin = this._plugins.get(pluginId);
     const permissions = plugin?.manifest?.permissions || [];
+    const telemetryManager = this._telemetry || this._sdk?.telemetry;
 
     const hooksScoped = this._hookRegistry.createScoped(pluginId);
     const eventsScoped = this._eventBus.createScoped(pluginId);
@@ -333,6 +336,7 @@ export class PluginManager {
       events: secureEvents,
       storage: secureStorage,
       ui: secureUi,
+      telemetry: telemetryManager ? telemetryManager.createScoped(pluginId) : null,
       logger: this._logger,
       config: this._config?.getAll() ?? {},
     };

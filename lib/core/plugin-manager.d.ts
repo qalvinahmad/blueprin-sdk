@@ -8,16 +8,18 @@ export declare class PluginManager {
     private _storage;
     private _logger;
     private _config;
+    private _telemetry;
     private _plugins;
     private _uiSlots;
     private _uiPages;
-    constructor({ sdk, eventBus, hookRegistry, storage, logger, config }: {
+    constructor({ sdk, eventBus, hookRegistry, storage, logger, config, telemetry }: {
         sdk: any;
         eventBus: any;
         hookRegistry: any;
         storage: any;
         logger: any;
         config: any;
+        telemetry: any;
     });
     init(): Promise<void>;
     register(manifest: any): Promise<{
@@ -62,6 +64,7 @@ export declare class PluginManager {
             registerSlot: (slotName: any, component: any) => void;
             addPage: (route: any, component: any, options?: any) => void;
         };
+        telemetry: any;
         logger: any;
         config: any;
     };
