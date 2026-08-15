@@ -88,15 +88,6 @@ export const EVENT_NAMES = {
 
   // Telemetry events
   TELEMETRY_TRACK: 'blueprin:telemetry:track',
-  TELEMETRY_METRIC: 'blueprin:telemetry:metric',
-  TELEMETRY_HEALTH: 'blueprin:telemetry:health',
-  TELEMETRY_ERROR: 'blueprin:telemetry:error',
-  TELEMETRY_PERF: 'blueprin:telemetry:perf',
-
-  // Plugin health events
-  PLUGIN_HEALTH_CHECK: 'blueprin:plugin:health:check',
-  PLUGIN_HEALTH_REPORT: 'blueprin:plugin:health:report',
-  PLUGIN_PERF_RECORD: 'blueprin:plugin:perf:record',
 };
 
 export const HOOK_NAMES = {

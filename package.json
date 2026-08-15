@@ -80,16 +80,6 @@
       "types": "./lib/telemetry/index.d.ts",
       "import": "./lib/telemetry/index.mjs",
       "require": "./lib/telemetry/index.js"
-    },
-    "./client": {
-      "types": "./lib/client/index.d.ts",
-      "import": "./lib/client/index.mjs",
-      "require": "./lib/client/index.js"
-    },
-    "./webhook": {
-      "types": "./lib/webhook/index.d.ts",
-      "import": "./lib/webhook/index.mjs",
-      "require": "./lib/webhook/index.js"
     }
   },
   "engines": {

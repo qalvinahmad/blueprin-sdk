@@ -139,6 +139,21 @@ describe('debounce', () => {
     vi.advanceTimersByTime(100);
     expect(fn).toHaveBeenCalledWith('arg1', 'arg2');
   });
+
+  it('should execute only the latest call when invoked multiple times before delay expires', () => {
+    const fn = vi.fn();
+    const debounced = debounce(fn, 300);
+
+    debounced('first');
+    debounced('second');
+
+    expect(fn).not.toHaveBeenCalled();
+
+    vi.advanceTimersByTime(300);
+
+    expect(fn).toHaveBeenCalledOnce();
+    expect(fn).toHaveBeenCalledWith('second');
+  });
 });
 
 describe('deepClone', () => {
