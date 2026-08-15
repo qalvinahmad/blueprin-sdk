@@ -14,7 +14,7 @@ const ROOT = join(__dirname, '..');
 const SRC = join(ROOT, 'lib', 'src');
 const OUT = join(ROOT, 'lib');
 
-const EXTERNALS = ['react', 'react-dom', 'react/jsx-runtime'];
+const EXTERNALS = ['react', 'react-dom', 'react/jsx-runtime', 'crypto', 'node:crypto', 'node:buffer'];
 
 const COMMON_OPTIONS = {
   bundle: true,
