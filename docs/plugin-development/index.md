@@ -121,3 +121,11 @@ ctx.events.on('blueprin:rab:calculated', (data) => {
   // React to the event
 });
 ```
+
+## See Also
+
+- [Publishing](../publishing/) — How to publish to the marketplace
+- [CLI Guide](./cli-guide.md) — Command-line tool for plugin development
+- [Developer Portal](./developer-portal.md) — Drag & drop UI for non-technical users
+- [Plugin Signing](./plugin-signing.md) — HMAC-SHA256 signature verification
+- [Sandbox & Security](./sandbox-security.md) — Security model and permission system

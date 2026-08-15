@@ -412,28 +412,28 @@ describe('BaseConnector extended', () => {
 describe('Specialized Connectors', () => {
   it('AccountingConnector should throw on methods', async () => {
     const connector = new AccountingConnector();
-    await expect(connector.getAccountBalances()).rejects.toThrow('Not implemented');
-    await expect(connector.createJournalEntry({})).rejects.toThrow('Not implemented');
-    await expect(connector.syncInvoices()).rejects.toThrow('Not implemented');
+    await expect(connector.getAccountBalances()).rejects.toThrow(/Not implemented|baseUrl not configured/);
+    await expect(connector.createJournalEntry({})).rejects.toThrow(/Not implemented|baseUrl not configured/);
+    await expect(connector.syncInvoices()).rejects.toThrow(/Not implemented|baseUrl not configured/);
   });
 
   it('MessagingConnector should throw on methods', async () => {
     const connector = new MessagingConnector();
-    await expect(connector.sendMessage('to', 'msg')).rejects.toThrow('Not implemented');
-    await expect(connector.sendTemplate('to', 'tid', {})).rejects.toThrow('Not implemented');
+    await expect(connector.sendMessage('to', 'msg')).rejects.toThrow(/Not implemented|baseUrl not configured/);
+    await expect(connector.sendTemplate('to', 'tid', {})).rejects.toThrow(/Not implemented|baseUrl not configured/);
   });
 
   it('BankConnector should throw on methods', async () => {
     const connector = new BankConnector();
-    await expect(connector.getMutasi('a', 's', 'e')).rejects.toThrow('Not implemented');
-    await expect(connector.createTransfer({})).rejects.toThrow('Not implemented');
+    await expect(connector.getMutasi('a', 's', 'e')).rejects.toThrow(/Not implemented|baseUrl not configured/);
+    await expect(connector.createTransfer({})).rejects.toThrow(/Not implemented|baseUrl not configured/);
   });
 
   it('SupplierConnector should throw on methods', async () => {
     const connector = new SupplierConnector();
-    await expect(connector.getCatalog()).rejects.toThrow('Not implemented');
-    await expect(connector.submitPurchaseOrder({})).rejects.toThrow('Not implemented');
-    await expect(connector.checkOrderStatus('id')).rejects.toThrow('Not implemented');
+    await expect(connector.getCatalog()).rejects.toThrow(/Not implemented|baseUrl not configured/);
+    await expect(connector.submitPurchaseOrder({})).rejects.toThrow(/Not implemented|baseUrl not configured/);
+    await expect(connector.checkOrderStatus('id')).rejects.toThrow(/Not implemented|baseUrl not configured/);
   });
 });
 

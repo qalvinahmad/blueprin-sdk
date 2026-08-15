@@ -144,3 +144,44 @@ export {
   pick,
   omit,
 } from './utils/index.js';
+
+// Public API Client & Errors
+export {
+  BlueprinClient,
+  AhsClient as PublicAhsClient,
+  MaterialsClient as PublicMaterialsClient,
+  RabClient as PublicRabClient,
+  PlansClient as PublicPlansClient,
+  BlueprinApiError,
+  AuthenticationError,
+  ScopePermissionError,
+  RateLimitError,
+  NotFoundError,
+} from './client/index.js';
+export type {
+  BlueprinClientOptions,
+  ApiResponse,
+  PaginationMeta,
+  AhsItem,
+  AhsComponent,
+  ListAhsParams,
+  PublicMaterial,
+  ListMaterialsParams,
+  PublicRabItem,
+  ListRabParams,
+  ApiPlan,
+  ApiUsageStats,
+} from './client/index.js';
+
+// Webhook
+export {
+  verifyWebhookSignature,
+  createWebhookDigest,
+  createWebhookSignature,
+} from './webhook/index.js';
+export type {
+  WebhookVerificationOptions,
+  WebhookVerificationResult,
+  WebhookEventType,
+  WebhookPayload,
+} from './webhook/index.js';
