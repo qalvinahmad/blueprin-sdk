@@ -1,5 +1,6 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { createEventHandler, EventPatterns, EVENT_NAMES } from '../lib/src/events/index.ts';
+import { EventBus } from '../lib/src/core/event-bus.ts';
 
 describe('Events module', () => {
   it('should export EVENT_NAMES', () => {
@@ -40,6 +41,65 @@ describe('Events module', () => {
       const debounced = EventPatterns.debounce(300);
       expect(typeof debounced).toBe('function');
       vi.useRealTimers();
+    });
+  });
+
+  describe('EventBus listener unsubscribe behavior', () => {
+    let bus: EventBus;
+    const mockLogger = {
+      debug: vi.fn(),
+      info: vi.fn(),
+      warn: vi.fn(),
+      error: vi.fn(),
+    };
+
+    beforeEach(() => {
+      vi.clearAllMocks();
+      bus = new EventBus({ logger: mockLogger });
+    });
+
+    it('should stop receiving events after calling the unsubscribe function returned by on()', async () => {
+      const callback = vi.fn();
+      const unsubscribe = bus.on('test:event', callback);
+
+      expect(bus.listenerCount('test:event')).toBe(1);
+
+      // First emit - callback should be called
+      await bus.emit('test:event', { id: 1 });
+      expect(callback).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledWith({ id: 1 });
+
+      // Unsubscribe listener
+      unsubscribe();
+      expect(bus.listenerCount('test:event')).toBe(0);
+
+      // Second emit - callback should NOT be called again
+      await bus.emit('test:event', { id: 2 });
+      expect(callback).toHaveBeenCalledTimes(1);
+    });
+
+    it('should only unsubscribe the targeted listener when multiple listeners exist', async () => {
+      const callbackA = vi.fn();
+      const callbackB = vi.fn();
+
+      const unsubscribeA = bus.on('test:multi', callbackA);
+      bus.on('test:multi', callbackB);
+
+      expect(bus.listenerCount('test:multi')).toBe(2);
+
+      // Emit before unsubscribe
+      await bus.emit('test:multi', { step: 'before' });
+      expect(callbackA).toHaveBeenCalledTimes(1);
+      expect(callbackB).toHaveBeenCalledTimes(1);
+
+      // Unsubscribe only callbackA
+      unsubscribeA();
+      expect(bus.listenerCount('test:multi')).toBe(1);
+
+      // Emit after unsubscribe
+      await bus.emit('test:multi', { step: 'after' });
+      expect(callbackA).toHaveBeenCalledTimes(1);
+      expect(callbackB).toHaveBeenCalledTimes(2);
     });
   });
 });
