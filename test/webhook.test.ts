@@ -91,4 +91,40 @@ describe('Webhook Verifier & Signatures', () => {
     expect(result.isValid).toBe(false);
     expect(result.reason).toContain('Webhook timestamp expired');
   });
+
+  it('rejects when required parameters are missing', () => {
+    expect(verifyWebhookSignature({ rawBody: '', signature: 'sig', secretKey: 'sec' }).isValid).toBe(false);
+    expect(verifyWebhookSignature({ rawBody: 'body', signature: '', secretKey: 'sec' }).isValid).toBe(false);
+    expect(verifyWebhookSignature({ rawBody: 'body', signature: 'sig', secretKey: '' }).isValid).toBe(false);
+  });
+
+  it('handles prefixed digest and hex signatures', () => {
+    const clientId = 'MALL-12345';
+    const requestId = 'REQ-67890';
+    const timestamp = new Date().toISOString();
+    const requestTarget = '/api/webhooks/doku-api-payment';
+    const prefixedDigest = createWebhookDigest(rawBody, true);
+
+    const stringToSignPrefixed = [
+      `Client-Id:${clientId}`,
+      `Request-Id:${requestId}`,
+      `Request-Timestamp:${timestamp}`,
+      `Request-Target:${requestTarget}`,
+      `Digest:${prefixedDigest}`,
+    ].join('\n');
+
+    const signature = `HMACSHA256=${createWebhookSignature(secret, stringToSignPrefixed)}`;
+
+    const res = verifyWebhookSignature({
+      rawBody,
+      signature,
+      secretKey: secret,
+      clientId,
+      requestId,
+      timestamp,
+      requestTarget,
+    });
+    expect(res.isValid).toBe(true);
+  });
 });
+

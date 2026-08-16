@@ -46,7 +46,7 @@ export const EVENT_NAMES = {
   MATERIAL_DELETED: 'blueprin:material:deleted',
   MATERIAL_IMPORTED: 'blueprin:material:imported',
 
-  // RAB events
+  // RAB (Budget Plan) events
   RAB_ITEM_ADDED: 'blueprin:rab:item:added',
   RAB_ITEM_UPDATED: 'blueprin:rab:item:updated',
   RAB_ITEM_REMOVED: 'blueprin:rab:item:removed',
@@ -114,7 +114,7 @@ export const HOOK_NAMES = {
   BEFORE_MATERIAL_UPDATE: 'blueprin:before:material:update',
   AFTER_MATERIAL_UPDATE: 'blueprin:after:material:update',
 
-  // RAB hooks
+  // RAB (Budget Plan) hooks
   BEFORE_RAB_CALCULATE: 'blueprin:before:rab:calculate',
   AFTER_RAB_CALCULATE: 'blueprin:after:rab:calculate',
   BEFORE_RAB_EXPAND: 'blueprin:before:rab:expand',

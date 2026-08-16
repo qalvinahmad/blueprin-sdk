@@ -49,4 +49,31 @@ describe('ConfigManager extended paths', () => {
     manager.set('key', 'value');
     expect(manager.get('key')).toBe('value');
   });
+
+  it('should init and persist with browser localStorage', async () => {
+    let storageMap: Record<string, string> = {
+      'test:blueprin_sdk_config': JSON.stringify({ preloaded: 'yes' }),
+    };
+
+    vi.stubGlobal('window', {});
+    vi.stubGlobal('localStorage', {
+      getItem: (k: string) => storageMap[k] ?? null,
+      setItem: (k: string, v: string) => {
+        storageMap[k] = v;
+      },
+    });
+
+    const browserManager = new ConfigManager({ appId: 'test-app', storagePrefix: 'test' });
+    await browserManager.init();
+    expect(browserManager.get('preloaded')).toBe('yes');
+
+    browserManager.set('new_key', 'saved');
+    expect(JSON.parse(storageMap['test:blueprin_sdk_config']).new_key).toBe('saved');
+
+    browserManager.remove('new_key');
+    expect(JSON.parse(storageMap['test:blueprin_sdk_config']).new_key).toBeUndefined();
+
+    vi.unstubAllGlobals();
+  });
 });
+

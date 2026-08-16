@@ -104,6 +104,19 @@ describe('generateId', () => {
     const id2 = generateId();
     expect(id1).not.toBe(id2);
   });
+
+  it('should use fallback random generator when crypto.randomUUID is missing', () => {
+    const originalCrypto = globalThis.crypto;
+    try {
+      // @ts-ignore
+      delete globalThis.crypto;
+      const id = generateId();
+      expect(id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+    } finally {
+      // @ts-ignore
+      globalThis.crypto = originalCrypto;
+    }
+  });
 });
 
 describe('debounce', () => {

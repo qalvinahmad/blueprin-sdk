@@ -2,7 +2,7 @@
  * Formula Engine — Pipeline for construction cost calculations.
  *
  * Supports: coefficient, escalation, allowance, overhead, profit, tax.
- * Designed for RAB (Rencana Anggaran Biaya) workflows.
+ * Designed for budget plan (RAB - Rencana Anggaran Biaya) workflows.
  *
  * Pipeline:
  *   baseCost → coefficient → escalation → subtotal
@@ -60,9 +60,9 @@ export interface FormulaResult {
     pphTotal: number;
     grandTotal: number;
     breakdown: {
-        bahan: number;
-        upah: number;
-        alat: number;
+        material: number;
+        labor: number;
+        equipment: number;
         other: number;
     };
     metadata: Record<string, any>;
@@ -96,7 +96,7 @@ export declare class FormulaEngine {
     private _getCoefficient;
     private _calculateEscalation;
     /**
-     * Build a FormulaContext from an AHS catalog entry.
+     * Build a FormulaContext from a unit price analysis catalog entry.
      */
     static fromAhsEntry(ahsEntry: any, options?: Partial<FormulaContext>): FormulaContext;
     /**

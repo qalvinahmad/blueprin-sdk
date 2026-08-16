@@ -2,7 +2,7 @@
  * Formula Engine — Pipeline for construction cost calculations.
  *
  * Supports: coefficient, escalation, allowance, overhead, profit, tax.
- * Designed for RAB (Rencana Anggaran Biaya) workflows.
+ * Designed for budget plan (RAB - Rencana Anggaran Biaya) workflows.
  *
  * Pipeline:
  *   baseCost → coefficient → escalation → subtotal
@@ -68,9 +68,9 @@ export interface FormulaResult {
   pphTotal: number;
   grandTotal: number;
   breakdown: {
-    bahan: number;
-    upah: number;
-    alat: number;
+    material: number;
+    labor: number;
+    equipment: number;
     other: number;
   };
   metadata: Record<string, any>;
@@ -222,9 +222,9 @@ export class FormulaEngine {
 
     // Breakdown by category
     const breakdown = {
-      bahan: items.filter((i) => i.category === 'MATERIAL').reduce((s, i) => s + (i.subtotal || 0), 0),
-      upah: items.filter((i) => i.category === 'UPAH').reduce((s, i) => s + (i.subtotal || 0), 0),
-      alat: items.filter((i) => i.category === 'ALAT').reduce((s, i) => s + (i.subtotal || 0), 0),
+      material: items.filter((i) => i.category === 'MATERIAL').reduce((s, i) => s + (i.subtotal || 0), 0),
+      labor: items.filter((i) => i.category === 'UPAH').reduce((s, i) => s + (i.subtotal || 0), 0),
+      equipment: items.filter((i) => i.category === 'ALAT').reduce((s, i) => s + (i.subtotal || 0), 0),
       other: items.filter((i) => i.category === 'OTHER').reduce((s, i) => s + (i.subtotal || 0), 0),
     };
 
@@ -262,9 +262,9 @@ export class FormulaEngine {
     const grandTotal = subtotal + overheadTotal + profitTotal + ppnTotal;
 
     const breakdown = {
-      bahan: items.filter((i) => i.category === 'MATERIAL').reduce((s, i) => s + (i.subtotal || 0), 0),
-      upah: items.filter((i) => i.category === 'UPAH').reduce((s, i) => s + (i.subtotal || 0), 0),
-      alat: items.filter((i) => i.category === 'ALAT').reduce((s, i) => s + (i.subtotal || 0), 0),
+      material: items.filter((i) => i.category === 'MATERIAL').reduce((s, i) => s + (i.subtotal || 0), 0),
+      labor: items.filter((i) => i.category === 'UPAH').reduce((s, i) => s + (i.subtotal || 0), 0),
+      equipment: items.filter((i) => i.category === 'ALAT').reduce((s, i) => s + (i.subtotal || 0), 0),
       other: items.filter((i) => i.category === 'OTHER').reduce((s, i) => s + (i.subtotal || 0), 0),
     };
 
@@ -304,7 +304,7 @@ export class FormulaEngine {
   }
 
   /**
-   * Build a FormulaContext from an AHS catalog entry.
+   * Build a FormulaContext from a unit price analysis catalog entry.
    */
   static fromAhsEntry(ahsEntry: any, options: Partial<FormulaContext> = {}): FormulaContext {
     const components: CostComponent[] = (ahsEntry.components || []).map((c: any) => ({
