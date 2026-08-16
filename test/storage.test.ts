@@ -154,6 +154,22 @@ describe('StorageAdapter', () => {
     expect(await scoped.has('key')).toBe(false);
   });
 
+  it('should isolate clear() to the specific scope without clearing other scopes', async () => {
+    const scopeA = new StorageAdapter({ prefix: 'scopeA' });
+    const scopeB = new StorageAdapter({ prefix: 'scopeB' });
+
+    await scopeA.set('sharedKey', 'valA');
+    await scopeB.set('sharedKey', 'valB');
+
+    expect(await scopeA.get('sharedKey')).toBe('valA');
+    expect(await scopeB.get('sharedKey')).toBe('valB');
+
+    await scopeA.clear();
+
+    expect(await scopeA.get('sharedKey')).toBeNull();
+    expect(await scopeB.get('sharedKey')).toBe('valB');
+  });
+
   it('should return cached values', async () => {
     await storage.set('cached', 'data');
     // Get should return from cache
