@@ -4,7 +4,7 @@ export class MaterialsClient {
   constructor(private requestFn: <T>(endpoint: string, params?: Record<string, any>) => Promise<ApiResponse<T>>) {}
 
   /**
-   * List or search materials, labor (upah), or tools (alat)
+   * List or search materials, labor, or tools
    */
   async list(params?: ListMaterialsParams): Promise<ApiResponse<PublicMaterial[]>> {
     return this.requestFn<PublicMaterial[]>('/api/public/materials', params);
@@ -18,14 +18,14 @@ export class MaterialsClient {
   }
 
   /**
-   * Shortcut to list labor (upah)
+   * Shortcut to list labor items
    */
   async listLabor(params?: Omit<ListMaterialsParams, 'kategori'>): Promise<ApiResponse<PublicMaterial[]>> {
     return this.list({ ...params, kategori: 'UPAH' });
   }
 
   /**
-   * Shortcut to list tools/equipment (alat)
+   * Shortcut to list tools/equipment items
    */
   async listTools(params?: Omit<ListMaterialsParams, 'kategori'>): Promise<ApiResponse<PublicMaterial[]>> {
     return this.list({ ...params, kategori: 'ALAT' });

@@ -5,6 +5,9 @@
  * applies formatters, and generates reports.
  */
 export declare class ReportBuilder {
+    dataSources: Map<string, (options?: any) => Promise<any> | any>;
+    formatters: Map<string, (data: any, options?: any) => string>;
+    reportTypes: Map<string, any>;
     constructor();
     /**
      * Register default data sources and formatters.
@@ -13,22 +16,27 @@ export declare class ReportBuilder {
     /**
      * Register a data source.
      */
-    registerDataSource(name: any, fetcher: any): void;
+    registerDataSource(name: string, fetcher: (options?: any) => any): void;
     /**
      * Register a formatter.
      */
-    registerFormatter(name: any, formatter: any): void;
+    registerFormatter(name: string, formatter: (data: any, options?: any) => string): void;
     /**
      * Register a report type.
      */
-    registerReportType(name: any, config: any): void;
+    registerReportType(name: string, config: any): void;
     /**
      * Generate a report.
      */
-    generate(reportType: any, options?: {}): Promise<any>;
+    generate(reportType: string, options?: any): Promise<any>;
     /**
      * List available report types.
      */
-    listReportTypes(): unknown[];
+    listReportTypes(): {
+        id: string;
+        name: any;
+        dataSources: any;
+        defaultFormat: any;
+    }[];
 }
 export default ReportBuilder;

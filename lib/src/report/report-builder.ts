@@ -6,6 +6,10 @@
  */
 
 export class ReportBuilder {
+  public dataSources: Map<string, (options?: any) => Promise<any> | any>;
+  public formatters: Map<string, (data: any, options?: any) => string>;
+  public reportTypes: Map<string, any>;
+
   constructor() {
     this.dataSources = new Map();
     this.formatters = new Map();
@@ -21,7 +25,7 @@ export class ReportBuilder {
     this.registerFormatter("csv", (data, options) => {
       if (!data?.length) return "";
       const headers = options?.headers || Object.keys(data[0]);
-      const rows = data.map((row) => headers.map((h) => String(row[h] ?? "")).join(","));
+      const rows = data.map((row: any) => headers.map((h: string) => String(row[h] ?? "")).join(","));
       return [headers.join(","), ...rows].join("\n");
     });
 
@@ -32,7 +36,7 @@ export class ReportBuilder {
       const headers = options?.headers || Object.keys(data[0]);
       const headerRow = `| ${headers.join(" | ")} |`;
       const separatorRow = `| ${headers.map(() => "---").join(" | ")} |`;
-      const rows = data.map((row) => `| ${headers.map((h) => String(row[h] ?? "")).join(" | ")} |`);
+      const rows = data.map((row: any) => `| ${headers.map((h: string) => String(row[h] ?? "")).join(" | ")} |`);
       return [headerRow, separatorRow, ...rows].join("\n");
     });
 
@@ -40,22 +44,22 @@ export class ReportBuilder {
       name: "Bill of Quantities",
       dataSources: ["ahs", "materials"],
       formatter: "csv",
-      generate: (data) => {
-        return data.ahs?.map((ahsItem) => ({
-          kode: ahsItem.kode,
-          uraian: ahsItem.name,
-          satuan: ahsItem.satuan,
-          harga: ahsItem.harga,
+      generate: (data: any) => {
+        return data.ahs?.map((ahsItem: any) => ({
+          code: ahsItem.kode,
+          description: ahsItem.name,
+          unit: ahsItem.satuan,
+          price: ahsItem.harga,
         })) || [];
       },
     });
 
     this.registerReportType("cost_estimate", {
       name: "Cost Estimate",
-      dataSources: ["ahs", "materials", "upah", "alat"],
+      dataSources: ["ahs", "materials", "labor", "equipment"],
       formatter: "csv",
-      generate: (data) => {
-        const total = (data.ahs || []).reduce((sum, item) => sum + (item.harga || 0), 0);
+      generate: (data: any) => {
+        const total = (data.ahs || []).reduce((sum: number, item: any) => sum + (item.harga || 0), 0);
         return {
           items: data.ahs || [],
           total,
@@ -65,15 +69,15 @@ export class ReportBuilder {
     });
 
     this.registerReportType("rab_detailed", {
-      name: "RAB Detailed",
-      dataSources: ["ahs", "materials", "upah", "alat"],
+      name: "Budget Plan Detailed",
+      dataSources: ["ahs", "materials", "labor", "equipment"],
       formatter: "markdown",
-      generate: (data) => {
-        return (data.ahs || []).map((item) => ({
+      generate: (data: any) => {
+        return (data.ahs || []).map((item: any) => ({
           ...item,
-          material_cost: (item.materials || []).reduce((s, m) => s + (m.subtotal || 0), 0),
-          labor_cost: (item.upah || []).reduce((s, u) => s + (u.subtotal || 0), 0),
-          equipment_cost: (item.alat || []).reduce((s, a) => s + (a.subtotal || 0), 0),
+          material_cost: (item.materials || []).reduce((s: number, m: any) => s + (m.subtotal || 0), 0),
+          labor_cost: (item.labor || []).reduce((s: number, u: any) => s + (u.subtotal || 0), 0),
+          equipment_cost: (item.equipment || []).reduce((s: number, a: any) => s + (a.subtotal || 0), 0),
         }));
       },
     });
@@ -82,32 +86,32 @@ export class ReportBuilder {
   /**
    * Register a data source.
    */
-  registerDataSource(name, fetcher) {
+  registerDataSource(name: string, fetcher: (options?: any) => any) {
     this.dataSources.set(name, fetcher);
   }
 
   /**
    * Register a formatter.
    */
-  registerFormatter(name, formatter) {
+  registerFormatter(name: string, formatter: (data: any, options?: any) => string) {
     this.formatters.set(name, formatter);
   }
 
   /**
    * Register a report type.
    */
-  registerReportType(name, config) {
+  registerReportType(name: string, config: any) {
     this.reportTypes.set(name, config);
   }
 
   /**
    * Generate a report.
    */
-  async generate(reportType, options = {}) {
+  async generate(reportType: string, options: any = {}) {
     const config = this.reportTypes.get(reportType);
     if (!config) throw new Error(`Report type "${reportType}" not found.`);
 
-    const data = {};
+    const data: Record<string, any> = {};
     for (const sourceName of config.dataSources) {
       const fetcher = this.dataSources.get(sourceName);
       if (fetcher) {
@@ -129,7 +133,7 @@ export class ReportBuilder {
    * List available report types.
    */
   listReportTypes() {
-    return Array.from(this.reportTypes.entries()).map(([key, config]) => ({
+    return Array.from(this.reportTypes.entries()).map(([key, config]: [string, any]) => ({
       id: key,
       name: config.name,
       dataSources: config.dataSources,
@@ -139,3 +143,4 @@ export class ReportBuilder {
 }
 
 export default ReportBuilder;
+

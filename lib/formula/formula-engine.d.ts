@@ -96,7 +96,7 @@ export declare class FormulaEngine {
     private _getCoefficient;
     private _calculateEscalation;
     /**
-     * Build a FormulaContext from an AHS catalog entry.
+     * Build a FormulaContext from a unit price analysis catalog entry.
      */
     static fromAhsEntry(ahsEntry: any, options?: Partial<FormulaContext>): FormulaContext;
     /**

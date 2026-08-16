@@ -425,4 +425,47 @@ describe('PluginManager permission denied paths', () => {
     const widgets = sdk.plugins.getUiComponents('widgets');
     expect(widgets.length).toBe(1);
   });
+
+  it('allows operations when permissions are granted and checks active dependency', async () => {
+    let hookExecuted = false;
+    let eventReceived = false;
+
+    // Register and activate base plugin
+    await sdk.plugins.register(
+      definePlugin({
+        id: 'base-dep',
+        name: 'Base Dep',
+        version: '1.0.0',
+        activate: () => ({ api: {} }),
+      })
+    );
+    await sdk.plugins.activate('base-dep');
+
+    // Register plugin that depends on base-dep with full permissions
+    await sdk.plugins.register(
+      definePlugin({
+        id: 'full-perms',
+        name: 'Full Perms',
+        version: '1.0.0',
+        dependencies: ['base-dep'],
+        permissions: ['events:listen', 'events:emit', 'hooks:register', 'storage:write'],
+        activate: async (ctx) => {
+          ctx.events.on('full:event', () => {
+            eventReceived = true;
+          });
+          ctx.events.emit('full:event', {});
+          ctx.hooks.register('full:hook', () => {
+            hookExecuted = true;
+          });
+          await ctx.storage.set('p_key', 'val');
+          await ctx.storage.remove('p_key');
+          return { api: {} };
+        },
+      })
+    );
+
+    await sdk.plugins.activate('full-perms');
+    expect(eventReceived).toBe(true);
+  });
 });
+

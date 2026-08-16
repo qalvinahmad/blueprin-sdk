@@ -74,7 +74,7 @@ export class BaseConnector {
     }
   }
 
-  async _request(method, path, body, options = {}) {
+  async _request(method: string, path: string, body?: any, options: any = {}) {
     const baseUrl = this._config.baseUrl || this._config.apiUrl;
     if (!baseUrl) throw new Error('baseUrl not configured');
 
@@ -116,7 +116,7 @@ export class BaseConnector {
     };
   }
 
-  async onConnect(config) {}
+  async onConnect(config: any) {}
   async onDisconnect() {}
   async onTest() { return true; }
 }
@@ -127,11 +127,13 @@ export class ConnectorRegistry {
   private _connectors: any;
   private _instances: any;
   private _storage: any;
+  private _logger: any;
 
-  constructor({ storage }) {
+  constructor({ storage, logger }: any = {}) {
     this._connectors = new Map();
     this._instances = new Map();
     this._storage = storage;
+    this._logger = logger;
   }
 
   register(ConnectorClass) {

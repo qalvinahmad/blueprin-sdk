@@ -46,7 +46,7 @@ export const EVENT_NAMES = {
   MATERIAL_DELETED: 'blueprin:material:deleted',
   MATERIAL_IMPORTED: 'blueprin:material:imported',
 
-  // RAB events
+  // RAB (Budget Plan) events
   RAB_ITEM_ADDED: 'blueprin:rab:item:added',
   RAB_ITEM_UPDATED: 'blueprin:rab:item:updated',
   RAB_ITEM_REMOVED: 'blueprin:rab:item:removed',
@@ -88,6 +88,15 @@ export const EVENT_NAMES = {
 
   // Telemetry events
   TELEMETRY_TRACK: 'blueprin:telemetry:track',
+  TELEMETRY_METRIC: 'blueprin:telemetry:metric',
+  TELEMETRY_HEALTH: 'blueprin:telemetry:health',
+  TELEMETRY_ERROR: 'blueprin:telemetry:error',
+  TELEMETRY_PERF: 'blueprin:telemetry:perf',
+
+  // Plugin health events
+  PLUGIN_HEALTH_CHECK: 'blueprin:plugin:health:check',
+  PLUGIN_HEALTH_REPORT: 'blueprin:plugin:health:report',
+  PLUGIN_PERF_RECORD: 'blueprin:plugin:perf:record',
 };
 
 export const HOOK_NAMES = {
@@ -105,7 +114,7 @@ export const HOOK_NAMES = {
   BEFORE_MATERIAL_UPDATE: 'blueprin:before:material:update',
   AFTER_MATERIAL_UPDATE: 'blueprin:after:material:update',
 
-  // RAB hooks
+  // RAB (Budget Plan) hooks
   BEFORE_RAB_CALCULATE: 'blueprin:before:rab:calculate',
   AFTER_RAB_CALCULATE: 'blueprin:after:rab:calculate',
   BEFORE_RAB_EXPAND: 'blueprin:before:rab:expand',

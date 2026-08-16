@@ -1,0 +1,20 @@
+export { OpenRouterClient } from './openrouter-client.js';
+export type {
+  OpenRouterClientOptions,
+  CreditsResponse,
+  ActivityItem,
+  Model,
+  ImageModel,
+  GenerationStats,
+  ChatCompletionOptions,
+  ImageGenerationOptions,
+  EmbeddingOptions,
+  EmbeddingData,
+  ModelPricing,
+  ModelTopProvider,
+  ImageModelArchitecture,
+  GenerationUsage,
+  ChatMessage,
+  ChatMessageContent,
+  OpenRouterError,
+} from './types.js';

@@ -7,29 +7,29 @@
 
 export const PLUGIN_SCOPES = {
   // Data read scopes
-  "read:projects": { description: "Melihat daftar proyek", category: "data" },
-  "read:ahs": { description: "Melihat data AHS", category: "data" },
-  "read:materials": { description: "Melihat data material/bahan", category: "data" },
-  "read:rab": { description: "Melihat data RAB", category: "data" },
-  "read:reports": { description: "Melihat laporan", category: "data" },
+  "read:projects": { description: "View project list", category: "data" },
+  "read:ahs": { description: "View unit price analysis data", category: "data" },
+  "read:materials": { description: "View material data", category: "data" },
+  "read:rab": { description: "View budget plan data", category: "data" },
+  "read:reports": { description: "View reports", category: "data" },
 
   // Data write scopes
-  "write:projects": { description: "Membuat/mengubah proyek", category: "data" },
-  "write:ahs": { description: "Membuat/mengubah data AHS", category: "data" },
-  "write:materials": { description: "Membuat/mengubah data material", category: "data" },
-  "write:rab": { description: "Membuat/mengubah data RAB", category: "data" },
+  "write:projects": { description: "Create/update projects", category: "data" },
+  "write:ahs": { description: "Create/update unit price analysis data", category: "data" },
+  "write:materials": { description: "Create/update material data", category: "data" },
+  "write:rab": { description: "Create/update budget plan data", category: "data" },
 
   // Billing scopes
-  "billing:read": { description: "Melihat informasi billing", category: "billing" },
-  "billing:checkout": { description: "Membuat pembayaran", category: "billing" },
+  "billing:read": { description: "View billing information", category: "billing" },
+  "billing:checkout": { description: "Create payments", category: "billing" },
 
   // Integration scopes
-  "integration:doku": { description: "Akses integrasi DOKU", category: "integration" },
-  "integration:bank": { description: "Akses integrasi bank", category: "integration" },
-  "integration:supplier": { description: "Akses integrasi supplier", category: "integration" },
+  "integration:doku": { description: "Access DOKU integration", category: "integration" },
+  "integration:bank": { description: "Access bank integration", category: "integration" },
+  "integration:supplier": { description: "Access supplier integration", category: "integration" },
 
   // User scopes
-  "user:profile": { description: "Melihat profil user", category: "user" },
+  "user:profile": { description: "View user profile", category: "user" },
 };
 
 /**

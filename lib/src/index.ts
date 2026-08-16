@@ -60,7 +60,7 @@ export type {
   MarketplacePartner,
   // Materials
   MaterialCategory,
-  // RAB
+  // RAB (Budget Plan)
   RabItem,
   RabCalculation,
   // Project Items
@@ -185,3 +185,18 @@ export type {
   WebhookEventType,
   WebhookPayload,
 } from './webhook/index.js';
+
+// OpenRouter
+export { OpenRouterClient } from './openrouter/index.js';
+export type {
+  OpenRouterClientOptions,
+  CreditsResponse,
+  ActivityItem,
+  Model,
+  ImageModel,
+  GenerationStats,
+  ChatCompletionOptions,
+  ImageGenerationOptions,
+  EmbeddingOptions,
+  EmbeddingData,
+} from './openrouter/index.js';
