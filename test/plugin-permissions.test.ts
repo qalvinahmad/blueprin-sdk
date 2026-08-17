@@ -467,5 +467,30 @@ describe('PluginManager permission denied paths', () => {
     await sdk.plugins.activate('full-perms');
     expect(eventReceived).toBe(true);
   });
+
+  it('should deny ui:inject when permission missing during registerSlot', async () => {
+    let capturedError: any = null;
+
+    await sdk.plugins.register(
+      definePlugin({
+        id: 'no-ui-inject',
+        name: 'No UI Inject',
+        version: '1.0.0',
+        permissions: [],
+        activate: async (ctx: any) => {
+          try {
+            ctx.ui.registerSlot('test-slot', () => null);
+          } catch (e: any) {
+            capturedError = e;
+          }
+          return { api: {} };
+        },
+      })
+    );
+
+    await sdk.plugins.activate('no-ui-inject');
+    expect(capturedError).toBeDefined();
+    expect(capturedError.message).toMatch(/ui:inject/);
+  });
 });
 
