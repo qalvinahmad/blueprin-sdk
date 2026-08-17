@@ -137,7 +137,7 @@
     "url": "https://github.com/qalvinahmad/blueprin-sdk/issues"
   },
   "devDependencies": {
-    "@types/node": "^20.17.0",
+    "@types/node": "^26.2.0",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitest/coverage-v8": "^3.2.7",
