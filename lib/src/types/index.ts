@@ -357,3 +357,73 @@ export interface TelemetryContext {
   track: (eventName: string, payload?: Record<string, any>) => Promise<any>;
   isEnabled: () => boolean;
 }
+
+// ─── Report Builder ──────────────────────────────────────────────────────────
+
+export type ReportFormat = 'csv' | 'json' | 'markdown' | 'xlsx' | 'pdf';
+
+export type ReportDataSource =
+  | 'rab_items'
+  | 'ahs'
+  | 'materials'
+  | 'labor'
+  | 'equipment'
+  | 'schedule'
+  | 'workforce'
+  | 'project'
+  | 'custom';
+
+export interface ReportTypeConfig {
+  id: string;
+  name: string;
+  description?: string;
+  dataSources: ReportDataSource[];
+  defaultFormat: ReportFormat;
+  columns: ReportColumn[];
+  groupBy?: string;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+}
+
+export interface ReportColumn {
+  key: string;
+  label: string;
+  type?: 'text' | 'number' | 'currency' | 'date' | 'boolean';
+  width?: number;
+  align?: 'left' | 'center' | 'right';
+  format?: string;
+}
+
+export interface ReportGenerateOptions {
+  format?: ReportFormat;
+  projectId?: string;
+  startDate?: string;
+  endDate?: string;
+  filters?: Record<string, any>;
+  columns?: string[];
+  groupBy?: string;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+  limit?: number;
+  offset?: number;
+}
+
+export interface ReportResult {
+  success: boolean;
+  reportType: string;
+  format: ReportFormat;
+  data: any;
+  totalRows: number;
+  generatedAt: string;
+  error?: string;
+}
+
+export interface ReportDefinition {
+  id: string;
+  name: string;
+  description?: string;
+  type: ReportTypeConfig;
+  pluginId?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}

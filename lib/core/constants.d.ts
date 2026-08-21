@@ -65,6 +65,13 @@ export declare const EVENT_NAMES: {
     AUTH_SIGNED_OUT: string;
     AUTH_SESSION_REFRESHED: string;
     TELEMETRY_TRACK: string;
+    TELEMETRY_METRIC: string;
+    TELEMETRY_HEALTH: string;
+    TELEMETRY_ERROR: string;
+    TELEMETRY_PERF: string;
+    PLUGIN_HEALTH_CHECK: string;
+    PLUGIN_HEALTH_REPORT: string;
+    PLUGIN_PERF_RECORD: string;
 };
 export declare const HOOK_NAMES: {
     BEFORE_PROJECT_CREATE: string;
