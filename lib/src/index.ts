@@ -95,6 +95,43 @@ export type {
   Project,
   // Plugin
   PluginManifest,
+  PluginPricingType,
+  PluginPricing,
+  SubscriptionInterval,
+  // Plugin License
+  PluginLicenseKey,
+  PluginLicenseActivation,
+  LicenseStatus,
+  LicenseActivationStatus,
+  // Plugin Subscriptions
+  PluginSubscription,
+  SubscriptionStatus,
+  // Plugin Developer Revenue
+  PluginDeveloperRevenue,
+  PluginRevenueItem,
+  PlatformFeeConfig,
+  // LMA (License Management Application)
+  LicenseTier,
+  OrgLicenseStatus,
+  UserLicenseStatus,
+  OrgLicense,
+  UserLicense,
+  FeatureEntitlement,
+  PluginFeature,
+  ExternalConnectorAuth,
+  LicenseCheckResult,
+  FeatureCheckResult,
+  // IKK (Indeks Kemahalan Konstruksi)
+  IKKReferenceCity,
+  IKKComponentType,
+  IKKProvince,
+  IKKCity,
+  IKKComponentDetail,
+  IKKHistory,
+  IKKComparison,
+  IKKCostEstimate,
+  IKKRegion,
+  INDONESIA_PROVINCES,
   // Connector
   ConnectorProtocol,
   ConnectorStatus,
@@ -145,6 +182,14 @@ export {
   SupplierConnector,
   BPJSConnector,
 } from './connector/index.js';
+
+// License Management (LMA)
+export { LicenseManager, FeatureManager } from './license/index.js';
+export type { LicenseManagerOptions, FeatureManagerOptions } from './license/index.js';
+
+// Indeks Kemahalan Konstruksi (IKK)
+export { IKKClient } from './ikk/index.js';
+export type { IKKClientOptions } from './ikk/index.js';
 
 // Hooks helpers
 export { createHook, HookPatterns } from './hooks/index.js';

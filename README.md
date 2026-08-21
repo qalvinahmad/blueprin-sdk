@@ -152,7 +152,7 @@ npm install
 npm run dev
 ```
 
-## What's Included
+## Domain Clients
 
 ```
 @alvinahmad/blueprin-sdk
@@ -170,7 +170,8 @@ npm run dev
 │   ├── RabClient          @alvinahmad/blueprin-sdk/rab
 │   ├── ScheduleClient     @alvinahmad/blueprin-sdk/schedule
 │   ├── MarketplaceClient  @alvinahmad/blueprin-sdk/marketplace
-│   └── WorkforceClient    @alvinahmad/blueprin-sdk/workforce
+│   ├── WorkforceClient    @alvinahmad/blueprin-sdk/workforce
+│   └── IKKClient          @alvinahmad/blueprin-sdk/ikk
 │
 ├── Integrations
 │   ├── BaseConnector      @alvinahmad/blueprin-sdk/connector
@@ -186,6 +187,7 @@ All modules support tree-shaking and are available as subpath imports:
 import { BlueprinSDK } from '@alvinahmad/blueprin-sdk';
 import { definePlugin } from '@alvinahmad/blueprin-sdk/core';
 import { ProjectClient } from '@alvinahmad/blueprin-sdk/project';
+import { IKKClient } from '@alvinahmad/blueprin-sdk/ikk';
 ```
 
 ## Features
@@ -194,7 +196,8 @@ import { ProjectClient } from '@alvinahmad/blueprin-sdk/project';
 - **Event Bus** — Pub/sub system for inter-plugin communication
 - **Hook Registry** — Before/after lifecycle hooks for extending functionality
 - **Storage Adapter** — localStorage + Supabase hybrid storage with SSR guards
-- **Domain Clients** — Project, Material, RAB, Schedule, Marketplace, and Workforce modules
+- **Domain Clients** — Project, Material, RAB, Schedule, Marketplace, Workforce, and IKK modules
+- **IKK Client** — Query Construction Cost Index data for 38 provinces and 514 cities
 - **UI Components** — React components for building plugin interfaces
 - **Connector SDK** — Build integrations with external services
 - **TypeScript Support** — Full type definitions included
@@ -234,8 +237,69 @@ For vulnerability reporting, see [Security Policy](SECURITY.md).
 - [UI Components](docs/ui-components/)
 - [Storage](docs/storage/)
 - [Connectors](docs/connectors/)
+- [IKK Client](docs/ikk/) — Construction Cost Index
 - [Testing](docs/testing/)
 - [Publishing](docs/publishing/)
+
+## IKK (Construction Cost Index)
+
+The `IKKClient` provides access to Indonesia's Construction Cost Index (Indeks Kemahalan Konstruksi) data from BPS (Badan Pusat Statistik).
+
+### Quick Example
+
+```javascript
+import { IKKClient } from '@alvinahmad/blueprin-sdk/ikk';
+
+const ikk = new IKKClient(sdk);
+
+// Get all 38 provinces
+const provinces = await ikk.getProvinceIKK(2024);
+console.log(provinces.length); // 38
+
+// Get IKK for a specific province (e.g., DKI Jakarta)
+const jakarta = await ikk.getProvinceIKK(2024, '3100');
+console.log(jakarta[0].ikk); // 114.79
+
+// Get cities in a province
+const cities = await ikk.getCityIKK(2024, '1600'); // South Sumatra
+
+// Calculate adjusted cost
+const estimate = await ikk.calculateCost(1000000000, '3100', 2024);
+console.log(estimate.adjustedCost); // 1,147,900,000 IDR
+
+// Compare provinces
+const comparison = await ikk.compareIKK(['1100', '3100', '6400'], 2024);
+
+// Get rankings (top 10 most expensive)
+const rankings = await ikk.getIKKRankings(2024, 10, 'desc');
+
+// Static helpers (no API call)
+const allProvinces = ikk.getProvinceList();
+const name = ikk.getProvinceName('1100'); // "Aceh"
+const sumatera = ikk.getProvincesByRegion('Sumatera');
+```
+
+### Key Concepts
+
+- **IKK = 100**: Costs equal the reference city (Banjarmasin for 2024)
+- **IKK > 100**: More expensive than reference
+- **IKK < 100**: Cheaper than reference
+- **Formula**: `adjustedCost = baseCost × (ikk / 100)`
+- **Reference city** changes yearly per BPS publication
+
+### API Methods
+
+| Method | Description |
+|--------|-------------|
+| `getProvinceIKK(year, code?, region?)` | Get province IKK data |
+| `getCityIKK(year, provinceCode, cityCode?)` | Get city IKK data |
+| `getIKKHistory(code, type, startYear, endYear)` | Get historical trends |
+| `compareIKK(codes, year)` | Compare multiple locations |
+| `calculateCost(baseCost, locationCode, year)` | Calculate adjusted cost |
+| `getIKKRankings(year, limit, order)` | Get ranked provinces |
+| `getProvinceList()` | Static province list |
+| `getProvinceName(code)` | Lookup province name |
+| `getProvincesByRegion(region)` | Filter by region |
 
 ## API Reference
 
