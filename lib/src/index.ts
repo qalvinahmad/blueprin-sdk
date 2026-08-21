@@ -48,6 +48,8 @@ export { ScheduleClient } from './schedule/index.js';
 export { MarketplaceClient } from './marketplace/index.js';
 export { AuthClient } from './auth/index.js';
 export { ReportClient } from './report/index.js';
+export { ReportBuilder } from './report/report-builder.js';
+export type { ReportTypeConfig, DataSourceFetcher, FormatterFn } from './report/report-builder.js';
 export { WorkforceClient } from './workforce/index.js';
 
 // Shared types (zero runtime cost)
@@ -100,6 +102,13 @@ export type {
   // Telemetry
   TelemetryLifecycle,
   TelemetryContext,
+  // Report
+  ReportFormat,
+  ReportDataSource,
+  ReportColumn,
+  ReportGenerateOptions,
+  ReportResult,
+  ReportDefinition,
 } from './types/index.js';
 
 // Validation schemas
