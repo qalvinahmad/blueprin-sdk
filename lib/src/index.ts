@@ -114,7 +114,28 @@ export {
 } from './schemas/index.js';
 
 // Connector
-export { BaseConnector, ConnectorRegistry } from './connector/index.js';
+export {
+  BaseConnector,
+  ConnectorRegistry,
+  GoogleCalendarConnector,
+  NotionConnector,
+  WhatsAppConnector,
+  MessagingConnector,
+  TelegramConnector,
+  DiscordConnector,
+  TeamsConnector,
+  SlackConnector,
+  ZoomConnector,
+  JiraConnector,
+  LinearConnector,
+  OneDriveConnector,
+  ConfluenceConnector,
+  MiroConnector,
+  AccountingConnector,
+  BankConnector,
+  SupplierConnector,
+  BPJSConnector,
+} from './connector/index.js';
 
 // Hooks helpers
 export { createHook, HookPatterns } from './hooks/index.js';
