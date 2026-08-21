@@ -80,16 +80,16 @@ describe('MaterialClient', () => {
       name: 'Semen Portland',
       category: 'MATERIAL',
       unit: 'sak',
-      unit_price: 65000,
+      price: 65000,
     });
     expect(material.id).toBeDefined();
     expect(material.name).toBe('Semen Portland');
-    expect(material.unit_price).toBe(65000);
+    expect(material.price).toBe(65000);
   });
 
   it('should list materials with filters', async () => {
-    await client.create(projectId, { name: 'Semen', category: 'MATERIAL', unit_price: 65000 });
-    await client.create(projectId, { name: 'Tukang', category: 'UPAH', unit_price: 150000 });
+    await client.create(projectId, { name: 'Semen', category: 'MATERIAL', price: 65000 });
+    await client.create(projectId, { name: 'Tukang', category: 'UPAH', price: 150000 });
 
     const materials = await client.list(projectId, { category: 'MATERIAL' });
     expect(materials.length).toBe(1);

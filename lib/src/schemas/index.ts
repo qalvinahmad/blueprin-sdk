@@ -73,20 +73,20 @@ function validate(input: unknown, rules: Record<string, ValidationRule>): Valida
 
 export const materialSchema = {
   parse: (input) => validate(input, {
-    nama: { required: true, type: 'string', minLength: 1 },
-    kategori: { type: 'string', oneOf: ['BAHAN', 'ALAT', 'UPAH', 'LAINNYA'] },
-    satuan: { type: 'string' },
-    harga: { type: 'number', min: 0 },
-    stok: { type: 'number', min: 0 },
-    aktif: { type: 'boolean' },
+    name: { required: true, type: 'string', minLength: 1 },
+    category: { type: 'string', oneOf: ['BAHAN', 'ALAT', 'UPAH', 'LAINNYA'] },
+    unit: { type: 'string' },
+    price: { type: 'number', min: 0 },
+    stock: { type: 'number', min: 0 },
+    active: { type: 'boolean' },
   }),
   safeParse: (input) => validate(input, {
-    nama: { required: true, type: 'string', minLength: 1 },
-    kategori: { type: 'string', oneOf: ['BAHAN', 'ALAT', 'UPAH', 'LAINNYA'] },
-    satuan: { type: 'string' },
-    harga: { type: 'number', min: 0 },
-    stok: { type: 'number', min: 0 },
-    aktif: { type: 'boolean' },
+    name: { required: true, type: 'string', minLength: 1 },
+    category: { type: 'string', oneOf: ['BAHAN', 'ALAT', 'UPAH', 'LAINNYA'] },
+    unit: { type: 'string' },
+    price: { type: 'number', min: 0 },
+    stock: { type: 'number', min: 0 },
+    active: { type: 'boolean' },
   }),
 };
 
@@ -185,15 +185,19 @@ export const workerSchema = {
 export const projectSchema = {
   parse: (input) => validate(input, {
     name: { required: true, type: 'string', minLength: 1 },
-    status_proyek: { type: 'string', oneOf: ['baru', 'berjalan', 'selesai', 'dibatalkan'] },
+    project_status: { type: 'string', oneOf: ['baru', 'berjalan', 'selesai', 'dibatalkan'] },
     budget: { type: 'number', min: 0 },
     building_area_m2: { type: 'number', min: 0 },
+    // Deprecated Indonesian aliases
+    status_proyek: { type: 'string', oneOf: ['baru', 'berjalan', 'selesai', 'dibatalkan'] },
   }),
   safeParse: (input) => validate(input, {
     name: { required: true, type: 'string', minLength: 1 },
-    status_proyek: { type: 'string', oneOf: ['baru', 'berjalan', 'selesai', 'dibatalkan'] },
+    project_status: { type: 'string', oneOf: ['baru', 'berjalan', 'selesai', 'dibatalkan'] },
     budget: { type: 'number', min: 0 },
     building_area_m2: { type: 'number', min: 0 },
+    // Deprecated Indonesian aliases
+    status_proyek: { type: 'string', oneOf: ['baru', 'berjalan', 'selesai', 'dibatalkan'] },
   }),
 };
 

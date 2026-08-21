@@ -46,8 +46,16 @@ export class MarketplaceClient {
 
   /**
    * List tukang (type='tukang') from marketplace_partners.
+   * @deprecated Use `listWorkers()` instead
    */
   async listTukang(filters: any = {}) {
+    return this.listPartners({ ...filters, type: 'tukang' });
+  }
+
+  /**
+   * List workers (type='tukang') from marketplace_partners.
+   */
+  async listWorkers(filters: any = {}) {
     return this.listPartners({ ...filters, type: 'tukang' });
   }
 
