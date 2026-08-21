@@ -12,7 +12,19 @@ import {
 describe('materialSchema', () => {
   it('should validate valid material', () => {
     const result = materialSchema.safeParse({
-      nama: 'Semen',
+      name: 'Semen',
+      category: 'BAHAN',
+      unit: 'sak',
+      price: 65000,
+      stock: 100,
+      active: true,
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it('should validate with deprecated Indonesian aliases', () => {
+    const result = materialSchema.safeParse({
+      name: 'Semen',
       kategori: 'BAHAN',
       satuan: 'sak',
       harga: 65000,
@@ -22,34 +34,34 @@ describe('materialSchema', () => {
     expect(result.success).toBe(true);
   });
 
-  it('should require nama', () => {
-    const result = materialSchema.safeParse({ kategori: 'BAHAN' });
+  it('should require name', () => {
+    const result = materialSchema.safeParse({ category: 'BAHAN' });
     expect(result.success).toBe(false);
-    expect(result.error.issues[0].message).toContain('nama');
+    expect(result.error.issues[0].message).toContain('name');
   });
 
-  it('should reject invalid kategori', () => {
-    const result = materialSchema.safeParse({ nama: 'Test', kategori: 'INVALID' });
-    expect(result.success).toBe(false);
-  });
-
-  it('should reject negative harga', () => {
-    const result = materialSchema.safeParse({ nama: 'Test', harga: -1 });
+  it('should reject invalid category', () => {
+    const result = materialSchema.safeParse({ name: 'Test', category: 'INVALID' });
     expect(result.success).toBe(false);
   });
 
-  it('should reject non-string nama', () => {
-    const result = materialSchema.safeParse({ nama: 123 });
+  it('should reject negative price', () => {
+    const result = materialSchema.safeParse({ name: 'Test', price: -1 });
     expect(result.success).toBe(false);
   });
 
-  it('should reject non-number harga', () => {
-    const result = materialSchema.safeParse({ nama: 'Test', harga: 'not a number' });
+  it('should reject non-string name', () => {
+    const result = materialSchema.safeParse({ name: 123 });
     expect(result.success).toBe(false);
   });
 
-  it('should reject non-boolean aktif', () => {
-    const result = materialSchema.safeParse({ nama: 'Test', aktif: 'yes' });
+  it('should reject non-number price', () => {
+    const result = materialSchema.safeParse({ name: 'Test', price: 'not a number' });
+    expect(result.success).toBe(false);
+  });
+
+  it('should reject non-boolean active', () => {
+    const result = materialSchema.safeParse({ name: 'Test', active: 'yes' });
     expect(result.success).toBe(false);
   });
 
@@ -59,7 +71,7 @@ describe('materialSchema', () => {
   });
 
   it('should accept valid parse', () => {
-    const result = materialSchema.parse({ nama: 'Semen' });
+    const result = materialSchema.parse({ name: 'Semen' });
     expect(result.success).toBe(true);
   });
 });

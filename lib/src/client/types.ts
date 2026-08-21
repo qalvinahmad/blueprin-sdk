@@ -26,72 +26,130 @@ export interface ApiResponse<T> {
 
 export interface AhsComponent {
   id?: string;
-  nama: string;
-  kategori: 'MATERIAL' | 'UPAH' | 'ALAT';
-  satuan: string;
-  koefisien: number;
-  harga_satuan: number;
+  name: string;
+  category: 'MATERIAL' | 'LABOR' | 'EQUIPMENT';
+  unit: string;
+  coefficient: number;
+  unit_price: number;
   subtotal: number;
+  // Deprecated Indonesian aliases
+  /** @deprecated Use `name` */
+  nama?: string;
+  /** @deprecated Use `category` */
+  kategori?: 'MATERIAL' | 'UPAH' | 'ALAT';
+  /** @deprecated Use `unit` */
+  satuan?: string;
+  /** @deprecated Use `coefficient` */
+  koefisien?: number;
+  /** @deprecated Use `unit_price` */
+  harga_satuan?: number;
 }
 
 export interface AhsItem {
   id: string;
-  kode: string;
-  nama: string;
-  satuan: string;
-  kelompok: string;
-  total_harga: number;
-  total_bahan: number;
-  total_upah: number;
-  total_alat: number;
+  code: string;
+  name: string;
+  unit: string;
+  group: string;
+  total_price: number;
+  total_material: number;
+  total_labor: number;
+  total_equipment: number;
   component_count?: number;
   components?: AhsComponent[];
+  // Deprecated Indonesian aliases
+  /** @deprecated Use `code` */
+  kode?: string;
+  /** @deprecated Use `name` */
+  nama?: string;
+  /** @deprecated Use `unit` */
+  satuan?: string;
+  /** @deprecated Use `group` */
+  kelompok?: string;
+  /** @deprecated Use `total_price` */
+  total_harga?: number;
+  /** @deprecated Use `total_material` */
+  total_bahan?: number;
+  /** @deprecated Use `total_labor` */
+  total_upah?: number;
+  /** @deprecated Use `total_equipment` */
+  total_alat?: number;
 }
 
 export interface ListAhsParams {
   id?: string;
   search?: string;
-  kelompok?: string;
+  group?: string;
   limit?: number;
   offset?: number;
+  /** @deprecated Use `group` */
+  kelompok?: string;
 }
 
 export interface PublicMaterial {
   id: string;
-  nama: string;
-  kategori: 'MATERIAL' | 'UPAH' | 'ALAT';
-  satuan: string;
-  harga: number;
+  name: string;
+  category: 'MATERIAL' | 'LABOR' | 'EQUIPMENT';
+  unit: string;
+  price: number;
+  specification?: string;
+  code?: string;
+  // Deprecated Indonesian aliases
+  /** @deprecated Use `name` */
+  nama?: string;
+  /** @deprecated Use `category` */
+  kategori?: 'MATERIAL' | 'UPAH' | 'ALAT';
+  /** @deprecated Use `unit` */
+  satuan?: string;
+  /** @deprecated Use `price` */
+  harga?: number;
+  /** @deprecated Use `specification` */
   spesifikasi?: string;
-  kode?: string;
 }
 
 export interface ListMaterialsParams {
   id?: string;
-  kategori?: 'MATERIAL' | 'UPAH' | 'ALAT' | string;
+  category?: 'MATERIAL' | 'LABOR' | 'EQUIPMENT' | string;
   search?: string;
   limit?: number;
   offset?: number;
+  /** @deprecated Use `category` */
+  kategori?: 'MATERIAL' | 'UPAH' | 'ALAT' | string;
 }
 
 export interface PublicRabItem {
   id: string;
   project_id: string;
-  uraian: string;
-  kategori: string;
+  description: string;
+  category: string;
   volume: number;
-  satuan: string;
-  harga_satuan: number;
-  total_harga: number;
+  unit: string;
+  unit_price: number;
+  total_price: number;
+  code?: string;
+  // Deprecated Indonesian aliases
+  /** @deprecated Use `description` */
+  uraian?: string;
+  /** @deprecated Use `category` */
+  kategori?: string;
+  /** @deprecated Use `unit` */
+  satuan?: string;
+  /** @deprecated Use `unit_price` */
+  harga_satuan?: number;
+  /** @deprecated Use `total_price` */
+  total_harga?: number;
+  /** @deprecated Use `code` */
   kode?: string;
 }
 
 export interface ListRabParams {
   project_id: string;
   search?: string;
-  kategori?: string;
+  category?: string;
   limit?: number;
   offset?: number;
+  /** @deprecated Use `category` */
+  kategori?: string;
 }
 
 export interface ApiPlan {
