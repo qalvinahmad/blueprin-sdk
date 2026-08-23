@@ -209,6 +209,30 @@ export type {
   BoQExportItem,
 } from './takeoff/index.js';
 
+// BIM / 3D IFC Quantity Takeoff
+export { BimEngine, BimClient } from './bim/index.js';
+export type {
+  BimElementType,
+  BimDimensions,
+  BimElement,
+  BimStoreySummary,
+  BimModelSummary,
+  BimModel,
+} from './bim/index.js';
+
+// Real-time Collaboration
+export { CollabClient } from './collab/index.js';
+export type { CollabUser, CollabRoom, CollabMessage } from './collab/index.js';
+
+// Mobile / Field Inspection
+export { FieldClient } from './field/index.js';
+export type {
+  FieldWeather,
+  FieldDailyLog,
+  InspectionChecklistItem,
+  FieldInspection,
+} from './field/index.js';
+
 // Hooks helpers
 export { createHook, HookPatterns } from './hooks/index.js';
 

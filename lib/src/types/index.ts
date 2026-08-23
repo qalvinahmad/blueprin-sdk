@@ -1033,3 +1033,32 @@ export type {
   TakeoffSummary,
   BoQExportItem,
 } from '../takeoff/types.js';
+
+// ─── BIM / 3D IFC Quantity Takeoff ──────────────────────────────────────────
+
+export type {
+  BimElementType,
+  BimDimensions,
+  BimElement,
+  BimStoreySummary,
+  BimModelSummary,
+  BimModel,
+} from '../bim/types.js';
+
+// ─── Real-time Collaboration ────────────────────────────────────────────────
+
+export type {
+  CollabUser,
+  CollabRoom,
+  CollabMessage,
+} from '../collab/types.js';
+
+// ─── Mobile / Field Inspection ──────────────────────────────────────────────
+
+export type {
+  FieldWeather,
+  FieldDailyLog,
+  InspectionChecklistItem,
+  FieldInspection,
+} from '../field/types.js';
+

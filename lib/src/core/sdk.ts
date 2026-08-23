@@ -20,6 +20,9 @@ import { ScheduleClient } from '../schedule/index.js';
 import { MarketplaceClient } from '../marketplace/index.js';
 import { AuthClient } from '../auth/index.js';
 import { TakeoffClient } from '../takeoff/index.js';
+import { BimClient } from '../bim/index.js';
+import { CollabClient } from '../collab/index.js';
+import { FieldClient } from '../field/index.js';
 
 export class BlueprinSDK {
   private _logger: any;
@@ -38,6 +41,9 @@ export class BlueprinSDK {
   private _marketplace: any;
   private _auth: any;
   private _takeoff: any;
+  private _bim: any;
+  private _collab: any;
+  private _field: any;
   private _telemetry: any;
   private _initialized: any;
 
@@ -138,6 +144,20 @@ export class BlueprinSDK {
       hooks: this._hookRegistry,
       events: this._eventBus,
     });
+    this._bim = new BimClient({
+      storage: this._storage,
+      hooks: this._hookRegistry,
+      events: this._eventBus,
+    });
+    this._collab = new CollabClient({
+      storage: this._storage,
+      events: this._eventBus,
+    });
+    this._field = new FieldClient({
+      storage: this._storage,
+      hooks: this._hookRegistry,
+      events: this._eventBus,
+    });
     this._initialized = false;
     this._setupLifecycleTelemetry();
   }
@@ -227,6 +247,18 @@ export class BlueprinSDK {
 
   get takeoff() {
     return this._takeoff;
+  }
+
+  get bim() {
+    return this._bim;
+  }
+
+  get collab() {
+    return this._collab;
+  }
+
+  get field() {
+    return this._field;
   }
 
   async init() {

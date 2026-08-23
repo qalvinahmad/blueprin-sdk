@@ -16,7 +16,7 @@
 
 <br/>
 <div align="center">
-  <img src="https://drive.google.com/uc?export=view&id=1YLatzwU4xCGc8E2QWaXgQgJWFqOH3GOZ" alt="Blueprin App" width="100%" />
+  <img src="https://drive.google.com/uc?export=view&id=1YLatzwU4xCGc8E2QWaXgQgJWFqOH3GOZ" alt="Blueprin Logo" width="250" />
   <br/><br/>
 
   [![codecov](https://codecov.io/gh/qalvinahmad/blueprin-sdk/graph/badge.svg?token=dcf0d4cb-2c2d-4b9c-bd27-842a79e81966)](https://codecov.io/gh/qalvinahmad/blueprin-sdk)

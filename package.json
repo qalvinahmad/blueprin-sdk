@@ -100,6 +100,21 @@
       "types": "./lib/takeoff/index.d.ts",
       "import": "./lib/takeoff/index.mjs",
       "require": "./lib/takeoff/index.js"
+    },
+    "./bim": {
+      "types": "./lib/bim/index.d.ts",
+      "import": "./lib/bim/index.mjs",
+      "require": "./lib/bim/index.js"
+    },
+    "./collab": {
+      "types": "./lib/collab/index.d.ts",
+      "import": "./lib/collab/index.mjs",
+      "require": "./lib/collab/index.js"
+    },
+    "./field": {
+      "types": "./lib/field/index.d.ts",
+      "import": "./lib/field/index.mjs",
+      "require": "./lib/field/index.js"
     }
   },
   "engines": {
