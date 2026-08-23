@@ -23,21 +23,33 @@ export interface Material {
   project_id?: string;
   // Marketplace context
   partner_id?: string;
-  // Core fields (DB column names)
-  nama: string;
-  kategori: string;
-  satuan: string;
-  harga: number;
+  // Core fields (English primary)
+  name: string;
+  category: string;
+  unit: string;
+  price: number;
   // Marketplace-only fields
+  description?: string;
+  image_url?: string;
+  stock?: number;
+  active?: boolean;
+  // Backward-compat aliases (DB column names)
+  /** @deprecated Use `name` */
+  nama?: string;
+  /** @deprecated Use `category` */
+  kategori?: string;
+  /** @deprecated Use `unit` */
+  satuan?: string;
+  /** @deprecated Use `price` */
+  harga?: number;
+  /** @deprecated Use `description` */
   deskripsi?: string;
+  /** @deprecated Use `image_url` */
   gambar_url?: string;
+  /** @deprecated Use `stock` */
   stok?: number;
+  /** @deprecated Use `active` */
   aktif?: boolean;
-  // Backward-compat aliases (mapped from DB columns)
-  name?: string;
-  category?: string;
-  unit?: string;
-  unit_price?: number;
   supplier?: string;
   notes?: string;
   created_at?: string;
@@ -45,18 +57,19 @@ export interface Material {
 }
 
 /**
- * Map SDK-style input fields to DB column names.
+ * Map SDK-style input fields to normalized output.
+ * English names are primary; Indonesian names are accepted for backward compatibility.
  */
 function normalizeInput(input: any): any {
   return {
-    nama: input.nama || input.name || '',
-    kategori: (input.kategori || input.category || 'BAHAN').toUpperCase(),
-    satuan: input.satuan || input.unit || 'buah',
-    harga: Math.max(0, Number(input.harga ?? input.unit_price ?? 0)),
-    deskripsi: input.deskripsi || input.notes || '',
-    gambar_url: input.gambar_url || '',
-    stok: Math.max(0, Number(input.stok || 0)),
-    aktif: input.aktif !== undefined ? input.aktif : true,
+    name: input.name || input.nama || '',
+    category: (input.category || input.kategori || 'BAHAN').toUpperCase(),
+    unit: input.unit || input.satuan || 'pcs',
+    price: Math.max(0, Number(input.price ?? input.unit_price ?? input.harga ?? 0)),
+    description: input.description || input.notes || input.deskripsi || '',
+    image_url: input.image_url || input.gambar_url || '',
+    stock: Math.max(0, Number(input.stock ?? input.stok ?? 0)),
+    active: input.active !== undefined ? input.active : input.aktif !== undefined ? input.aktif : true,
     // Pass through marketplace-only fields
     partner_id: input.partner_id || undefined,
     supplier: input.supplier || '',
@@ -64,18 +77,22 @@ function normalizeInput(input: any): any {
 }
 
 /**
- * Normalize a DB row to the unified Material interface (add backward-compat aliases).
+ * Normalize a DB row to the unified Material interface.
+ * DB columns are in Indonesian; English aliases are added for convenience.
  */
 function normalizeRow(row: any): Material {
   if (!row) return row;
   return {
     ...row,
-    // Backward-compat aliases
-    name: row.nama,
-    category: row.kategori,
-    unit: row.satuan,
-    unit_price: row.harga,
-    notes: row.deskripsi,
+    // English aliases from DB columns
+    name: row.nama || row.name,
+    category: row.kategori || row.category,
+    unit: row.satuan || row.unit,
+    price: row.harga ?? row.price ?? row.unit_price,
+    description: row.deskripsi || row.notes || row.description,
+    image_url: row.gambar_url || row.image_url,
+    stock: row.stok ?? row.stock,
+    active: row.aktif ?? row.active,
   };
 }
 
@@ -117,9 +134,9 @@ export class MaterialClient {
       name: ctx.input.name || ctx.input.nama || '',
       category: (ctx.input.category || ctx.input.kategori || 'MATERIAL').toUpperCase(),
       unit: ctx.input.unit || ctx.input.satuan || 'pcs',
-      unit_price: ctx.input.unit_price ?? ctx.input.harga ?? 0,
+      price: ctx.input.unit_price ?? ctx.input.price ?? ctx.input.harga ?? 0,
       supplier: ctx.input.supplier || '',
-      notes: ctx.input.notes || ctx.input.deskripsi || '',
+      description: ctx.input.description || ctx.input.notes || ctx.input.deskripsi || '',
       created_at: new Date().toISOString(),
     };
 
@@ -161,7 +178,7 @@ export class MaterialClient {
     const summary = { MATERIAL: 0, UPAH: 0, ALAT: 0, LAINNYA: 0 };
     for (const m of materials) {
       const cat = m.category || m.kategori || 'MATERIAL';
-      const price = m.unit_price ?? m.harga ?? 0;
+      const price = m.price ?? m.unit_price ?? m.harga ?? 0;
       summary[cat] = (summary[cat] || 0) + price;
     }
     return summary;
@@ -181,6 +198,7 @@ export class MaterialClient {
     if (filters.partnerId) query = query.eq('partner_id', filters.partnerId);
     if (filters.category) query = query.eq('kategori', filters.category.toUpperCase());
     if (filters.search) query = query.ilike('nama', `%${filters.search}%`);
+    if (filters.active !== undefined) query = query.eq('aktif', filters.active);
     if (filters.aktif !== undefined) query = query.eq('aktif', filters.aktif);
 
     const { data, error } = await query;
@@ -212,14 +230,14 @@ export class MaterialClient {
     const normalized = normalizeInput(input);
     const payload = {
       partner_id: partnerId,
-      nama: normalized.nama,
-      kategori: normalized.kategori,
-      satuan: normalized.satuan,
-      harga: normalized.harga,
-      deskripsi: normalized.deskripsi,
-      gambar_url: normalized.gambar_url,
-      stok: normalized.stok,
-      aktif: normalized.aktif,
+      nama: normalized.name,
+      kategori: normalized.category,
+      satuan: normalized.unit,
+      harga: normalized.price,
+      deskripsi: normalized.description,
+      gambar_url: normalized.image_url,
+      stok: normalized.stock,
+      aktif: normalized.active,
     };
 
     const { data, error } = await this._supabase
@@ -244,12 +262,15 @@ export class MaterialClient {
     const payload: any = {};
     for (const key of allowed) {
       if (patch[key] !== undefined) payload[key] = patch[key];
-      // Also accept SDK-style aliases
+      // Also accept English aliases
       if (key === 'nama' && patch.name !== undefined) payload.nama = patch.name;
       if (key === 'kategori' && patch.category !== undefined) payload.kategori = patch.category.toUpperCase();
       if (key === 'satuan' && patch.unit !== undefined) payload.satuan = patch.unit;
-      if (key === 'harga' && patch.unit_price !== undefined) payload.harga = Math.max(0, Number(patch.unit_price));
-      if (key === 'deskripsi' && patch.notes !== undefined) payload.deskripsi = patch.notes;
+      if (key === 'harga' && (patch.price !== undefined || patch.unit_price !== undefined)) payload.harga = Math.max(0, Number(patch.price ?? patch.unit_price));
+      if (key === 'deskripsi' && (patch.description !== undefined || patch.notes !== undefined)) payload.deskripsi = patch.description || patch.notes;
+      if (key === 'gambar_url' && patch.image_url !== undefined) payload.gambar_url = patch.image_url;
+      if (key === 'stok' && patch.stock !== undefined) payload.stok = Math.max(0, Number(patch.stock));
+      if (key === 'aktif' && patch.active !== undefined) payload.aktif = patch.active;
     }
 
     // Normalize kategori to uppercase
@@ -291,8 +312,8 @@ export class MaterialClient {
   /**
    * Toggle marketplace product active status.
    */
-  async toggleMarketplaceProductActive(partnerId: string, materialId: string, aktif: boolean) {
-    return this.updateMarketplaceProduct(partnerId, materialId, { aktif });
+  async toggleMarketplaceProductActive(partnerId: string, materialId: string, active: boolean) {
+    return this.updateMarketplaceProduct(partnerId, materialId, { active, aktif: active });
   }
 
   /**
@@ -303,12 +324,12 @@ export class MaterialClient {
 
     const products = await this.listMarketplaceProducts({ partnerId });
     const total = products.length;
-    const active = products.filter((p) => p.aktif !== false).length;
-    const stockValue = products.reduce((sum, p) => sum + (p.harga || 0) * (p.stok || 0), 0);
+    const active = products.filter((p) => (p.active ?? p.aktif) !== false).length;
+    const stockValue = products.reduce((sum, p) => sum + (p.price ?? p.harga ?? 0) * (p.stock ?? p.stok ?? 0), 0);
 
     const categoryBreakdown: Record<string, number> = {};
     for (const p of products) {
-      const cat = p.kategori || 'LAINNYA';
+      const cat = p.category || p.kategori || 'LAINNYA';
       categoryBreakdown[cat] = (categoryBreakdown[cat] || 0) + 1;
     }
 
