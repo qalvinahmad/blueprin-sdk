@@ -19,6 +19,7 @@ import { RabClient } from '../rab/index.js';
 import { ScheduleClient } from '../schedule/index.js';
 import { MarketplaceClient } from '../marketplace/index.js';
 import { AuthClient } from '../auth/index.js';
+import { TakeoffClient } from '../takeoff/index.js';
 
 export class BlueprinSDK {
   private _logger: any;
@@ -36,6 +37,7 @@ export class BlueprinSDK {
   private _schedule: any;
   private _marketplace: any;
   private _auth: any;
+  private _takeoff: any;
   private _telemetry: any;
   private _initialized: any;
 
@@ -131,6 +133,11 @@ export class BlueprinSDK {
       events: this._eventBus,
       supabaseClient,
     });
+    this._takeoff = new TakeoffClient({
+      storage: this._storage,
+      hooks: this._hookRegistry,
+      events: this._eventBus,
+    });
     this._initialized = false;
     this._setupLifecycleTelemetry();
   }
@@ -216,6 +223,10 @@ export class BlueprinSDK {
 
   get auth() {
     return this._auth;
+  }
+
+  get takeoff() {
+    return this._takeoff;
   }
 
   async init() {

@@ -1015,3 +1015,21 @@ export const INDONESIA_PROVINCES = [
   { code: '9600', name: 'Papua Tengah', region: 'Maluku & Papua' },
   { code: '9700', name: 'Papua Pegunungan', region: 'Maluku & Papua' },
 ] as const;
+
+// ─── Digital Takeoff (PDF/CAD Measurement) ──────────────────────────────────
+
+export type {
+  TakeoffUnit,
+  TakeoffMeasurementType,
+  TakeoffPoint,
+  TakeoffScale,
+  TakeoffDeduction,
+  TakeoffItem,
+  TakeoffLayer,
+  TakeoffSheet,
+  TakeoffDocument,
+  TakeoffItemCalculation,
+  TakeoffCategorySummary,
+  TakeoffSummary,
+  BoQExportItem,
+} from '../takeoff/types.js';

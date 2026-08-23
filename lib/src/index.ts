@@ -191,6 +191,24 @@ export type { LicenseManagerOptions, FeatureManagerOptions } from './license/ind
 export { IKKClient } from './ikk/index.js';
 export type { IKKClientOptions } from './ikk/index.js';
 
+// Digital Takeoff (PDF/CAD Measurement)
+export { TakeoffEngine, TakeoffClient } from './takeoff/index.js';
+export type {
+  TakeoffUnit,
+  TakeoffMeasurementType,
+  TakeoffPoint,
+  TakeoffScale,
+  TakeoffDeduction,
+  TakeoffItem,
+  TakeoffLayer,
+  TakeoffSheet,
+  TakeoffDocument,
+  TakeoffItemCalculation,
+  TakeoffCategorySummary,
+  TakeoffSummary,
+  BoQExportItem,
+} from './takeoff/index.js';
+
 // Hooks helpers
 export { createHook, HookPatterns } from './hooks/index.js';
 
