@@ -60,7 +60,7 @@ export interface MarketplacePartner {
   completed_orders: number;
   completed_jobs: number;
   reviews: number;
-  // Tukang-specific
+  // Worker-specific
   specialization?: string;
   rate_oh: number;
   rate_borongan?: string;
@@ -82,15 +82,32 @@ export interface Material {
   project_id?: string;
   // Marketplace context (for seller products)
   partner_id?: string;
-  // Core fields (DB column names)
-  nama: string;
-  kategori: MaterialCategory | string;
-  satuan: string;
-  harga: number;
+  // Core fields
+  name: string;
+  category: MaterialCategory | string;
+  unit: string;
+  price: number;
   // Marketplace-only fields
+  description?: string;
+  image_url?: string;
+  stock?: number;
+  active?: boolean;
+  // Deprecated Indonesian aliases (use English names above)
+  /** @deprecated Use `name` instead */
+  nama?: string;
+  /** @deprecated Use `category` instead */
+  kategori?: string;
+  /** @deprecated Use `unit` instead */
+  satuan?: string;
+  /** @deprecated Use `price` instead */
+  harga?: number;
+  /** @deprecated Use `description` instead */
   deskripsi?: string;
+  /** @deprecated Use `image_url` instead */
   gambar_url?: string;
+  /** @deprecated Use `stock` instead */
   stok?: number;
+  /** @deprecated Use `active` instead */
   aktif?: boolean;
   // Timestamps
   created_at?: string;
@@ -108,10 +125,46 @@ export interface RabItem {
   unit_price: number;
   notes?: string;
   ahs_item_id?: string;
-  kategori?: string;
-  kode?: string;
-  uraian?: string;
+  /** Construction phase — must match SchedulePhase */
+  construction_phase?: string;
+  /** AHS code reference */
+  ahs_code?: string;
+  /** Category */
+  category?: string;
+  /** Code */
+  code?: string;
+  /** Description / narrative */
+  description?: string;
+  /** Labor cost per unit */
+  labor_price?: number;
+  /** Material cost per unit */
+  material_price?: number;
   created_at?: string;
+  // Deprecated Indonesian aliases
+  /** @deprecated Use `unit` instead */
+  satuan?: string;
+  /** @deprecated Use `unit_price` instead */
+  harga_satuan?: number;
+  /** @deprecated Use `unit_price` instead */
+  hargaSatuan?: number;
+  /** @deprecated Use `labor_price` instead */
+  hargaUpah?: number;
+  /** @deprecated Use `labor_price` instead */
+  harga_upah?: number;
+  /** @deprecated Use `material_price` instead */
+  hargaBahan?: number;
+  /** @deprecated Use `material_price` instead */
+  harga_bahan?: number;
+  /** @deprecated Use `construction_phase` instead */
+  fase_konstruksi?: string;
+  /** @deprecated Use `ahs_code` instead */
+  kode_ahs?: string;
+  /** @deprecated Use `category` instead */
+  kategori?: string;
+  /** @deprecated Use `code` instead */
+  kode?: string;
+  /** @deprecated Use `description` instead */
+  uraian?: string;
 }
 
 export interface RabCalculation {
@@ -131,14 +184,25 @@ export interface RabCalculation {
 export interface ProjectItem {
   id: string;
   project_id: string;
-  nama_item: string;
+  item_name: string;
   volume: number;
-  satuan: string;
-  harga_satuan: number;
-  kode?: string;
-  kategori?: string;
+  unit: string;
+  unit_price: number;
+  code?: string;
+  category?: string;
   user_id?: string;
   created_at?: string;
+  // Deprecated Indonesian aliases
+  /** @deprecated Use `item_name` instead */
+  nama_item?: string;
+  /** @deprecated Use `unit` instead */
+  satuan?: string;
+  /** @deprecated Use `unit_price` instead */
+  harga_satuan?: number;
+  /** @deprecated Use `code` instead */
+  kode?: string;
+  /** @deprecated Use `category` instead */
+  kategori?: string;
 }
 
 // ─── Schedule ─────────────────────────────────────────────────────────────────
@@ -162,10 +226,12 @@ export interface Task {
   due_date?: string;
   start_date?: string;
   completed_date?: string;
-  kategori?: string;
+  category?: string;
   status: TaskStatus;
   created_at?: string;
   updated_at?: string;
+  /** @deprecated Use `category` instead */
+  kategori?: string;
 }
 
 export interface Schedule {
@@ -182,10 +248,14 @@ export interface Schedule {
 export type RFQStatus = 'open' | 'quoted' | 'accepted' | 'closed';
 
 export interface RFQItem {
-  uraian: string;
-  satuan: string;
+  description: string;
+  unit: string;
   volume: number;
   referencePrice?: number;
+  /** @deprecated Use `description` instead */
+  uraian?: string;
+  /** @deprecated Use `unit` instead */
+  satuan?: string;
 }
 
 export interface RFQ {
@@ -306,11 +376,15 @@ export interface Project {
   client_name?: string;
   building_area_m2?: number;
   budget?: number;
-  jenis_bangunan?: string;
-  status_proyek: ProjectStatus;
+  building_type?: string;
+  project_status: ProjectStatus;
   meta?: Record<string, any>;
   created_at?: string;
   updated_at?: string;
+  /** @deprecated Use `building_type` instead */
+  jenis_bangunan?: string;
+  /** @deprecated Use `project_status` instead */
+  status_proyek?: ProjectStatus;
 }
 
 // ─── Plugin System ────────────────────────────────────────────────────────────

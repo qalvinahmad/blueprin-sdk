@@ -436,7 +436,15 @@ export class AccountingConnector extends BaseConnector {
 export class BankConnector extends BaseConnector {
   static type = 'bank';
 
+  /**
+   * Get bank mutations/transactions for an account.
+   * @deprecated Use `getMutations()` instead
+   */
   async getMutasi(accountId: string, startDate: string, endDate: string) {
+    return this.getMutations(accountId, startDate, endDate);
+  }
+
+  async getMutations(accountId: string, startDate: string, endDate: string) {
     return this._request('GET', `/api/accounts/${accountId}/mutations?start=${startDate}&end=${endDate}`);
   }
 

@@ -31,16 +31,33 @@ export class RabClient {
     const item = {
       id: generateId(),
       project_id: projectId,
-      work_name: input.work_name,
-      unit: input.unit || 'm',
+      work_name: input.work_name || input.uraian || '',
+      unit: input.unit || input.satuan || 'm',
       volume: input.volume || 0,
-      unit_price: input.unit_price || 0,
+      unit_price: input.unit_price || input.hargaSatuan || input.harga_satuan || 0,
       notes: input.notes || '',
-      ahs_item_id: input.ahs_item_id || null,
-      kategori: input.kategori || '',
-      kode: input.kode || '',
-      uraian: input.uraian || '',
+      ahs_item_id: input.ahs_item_id || input.ahs_code || input.kode_ahs || null,
+      category: input.category || input.kategori || '',
+      code: input.code || input.kode || '',
+      description: input.description || input.uraian || input.work_name || '',
+      construction_phase: input.construction_phase || input.fase_konstruksi || '',
+      ahs_code: input.ahs_code || input.kode_ahs || input.ahs_item_id || '',
+      labor_price: input.labor_price || input.hargaUpah || input.harga_upah || 0,
+      material_price: input.material_price || input.hargaBahan || input.harga_bahan || 0,
       created_at: new Date().toISOString(),
+      // Backward-compat Indonesian aliases
+      satuan: input.satuan || input.unit || 'm',
+      harga_satuan: input.harga_satuan || input.hargaSatuan || input.unit_price || 0,
+      hargaSatuan: input.hargaSatuan || input.harga_satuan || input.unit_price || 0,
+      hargaUpah: input.hargaUpah || input.harga_upah || input.labor_price || 0,
+      harga_upah: input.harga_upah || input.hargaUpah || input.labor_price || 0,
+      hargaBahan: input.hargaBahan || input.harga_bahan || input.material_price || 0,
+      harga_bahan: input.harga_bahan || input.hargaBahan || input.material_price || 0,
+      fase_konstruksi: input.fase_konstruksi || input.construction_phase || '',
+      kode_ahs: input.kode_ahs || input.ahs_code || input.ahs_item_id || '',
+      kategori: input.kategori || input.category || '',
+      kode: input.kode || input.code || '',
+      uraian: input.uraian || input.description || input.work_name || '',
     };
 
     const items = (await this._storage.get(`rab:${projectId}`)) || [];
@@ -141,23 +158,24 @@ export class RabClient {
     for (const item of items) {
       const components = ctx.ahsComponents.filter((c) => c.ahs_item_id === item.ahs_item_id);
       for (const comp of components) {
-        // Base AHS Component Subtotal: koefisien * volume_item * harga_satuan
-        const subtotal /* as any */ = (comp.koefisien || 0) * (item.volume || 0) * (comp.hargaSatuan || 0);
+        // Base AHS Component Subtotal: coefficient * volume_item * unit_price
+        const subtotal /* as any */ = (comp.coefficient || comp.koefisien || 0) * (item.volume || 0) * (comp.unit_price || comp.hargaSatuan || 0);
         
         const expanded = {
           rab_item_id: item.id,
-          name: comp.nama,
-          type: comp.jenis,
-          unit: comp.satuan,
-          coefficient: comp.koefisien,
-          unit_price: comp.hargaSatuan,
-          quantity: comp.koefisien * item.volume,
+          name: comp.name || comp.nama,
+          type: comp.type || comp.jenis,
+          unit: comp.unit || comp.satuan,
+          coefficient: comp.coefficient || comp.koefisien,
+          unit_price: comp.unit_price || comp.hargaSatuan,
+          quantity: (comp.coefficient || comp.koefisien) * item.volume,
           subtotal /* as any */,
         };
 
-        if (comp.jenis === 'MATERIAL') materials.push(expanded);
-        else if (comp.jenis === 'UPAH') labor.push(expanded);
-        else if (comp.jenis === 'ALAT') equipment.push(expanded);
+        const compType = comp.type || comp.jenis;
+        if (compType === 'MATERIAL') materials.push(expanded);
+        else if (compType === 'UPAH' || compType === 'LABOR') labor.push(expanded);
+        else if (compType === 'ALAT' || compType === 'EQUIPMENT') equipment.push(expanded);
       }
     }
 
