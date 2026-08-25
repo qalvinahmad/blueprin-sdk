@@ -42,9 +42,23 @@ export {
 // Domain clients
 export { ProjectClient } from './project/index.js';
 export { MaterialClient } from './material/index.js';
-export type { Material } from './material/index.js';
-export { RabClient } from './rab/index.js';
-export { ScheduleClient } from './schedule/index.js';
+export {
+  RabClient,
+  CostAnomalyDetector,
+  detectCostAnomalies,
+  summarizeAnomalies,
+  DEFAULT_BENCHMARK_PRICES,
+  DEFAULT_FICTITIOUS_KEYWORDS,
+  SEVERITY_META,
+} from './rab/index.js';
+export type {
+  AnomalySeverity,
+  AnomalyType,
+  AnomalyFinding,
+  AnomalySummary,
+  BenchmarkPriceEntry,
+  CostAnomalyOptions,
+} from './rab/index.js';
 export { MarketplaceClient } from './marketplace/index.js';
 export { AuthClient } from './auth/index.js';
 export { ReportClient } from './report/index.js';
