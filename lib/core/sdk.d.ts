@@ -1,6 +1,7 @@
 /**
  * Blueprin SDK - Main Entry Point
  */
+import { PreferencesManager } from '../preferences/index.js';
 export declare class BlueprinSDK {
     private _logger;
     private _config;
@@ -21,6 +22,7 @@ export declare class BlueprinSDK {
     private _bim;
     private _collab;
     private _field;
+    private _preferences;
     private _telemetry;
     private _initialized;
     constructor(options?: any);
@@ -46,6 +48,7 @@ export declare class BlueprinSDK {
     get bim(): any;
     get collab(): any;
     get field(): any;
+    get preferences(): PreferencesManager;
     init(): Promise<void>;
     /**
      * Alias for init() — backward-compatible with main app calling sdk.initialize()

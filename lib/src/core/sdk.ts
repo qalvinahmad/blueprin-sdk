@@ -23,6 +23,7 @@ import { TakeoffClient } from '../takeoff/index.js';
 import { BimClient } from '../bim/index.js';
 import { CollabClient } from '../collab/index.js';
 import { FieldClient } from '../field/index.js';
+import { PreferencesManager } from '../preferences/index.js';
 
 export class BlueprinSDK {
   private _logger: any;
@@ -44,6 +45,7 @@ export class BlueprinSDK {
   private _bim: any;
   private _collab: any;
   private _field: any;
+  private _preferences: any;
   private _telemetry: any;
   private _initialized: any;
 
@@ -158,6 +160,11 @@ export class BlueprinSDK {
       hooks: this._hookRegistry,
       events: this._eventBus,
     });
+    this._preferences = new PreferencesManager({
+      storage: this._storage,
+      events: this._eventBus,
+      initialPreferences: options.preferences,
+    });
     this._initialized = false;
     this._setupLifecycleTelemetry();
   }
@@ -259,6 +266,10 @@ export class BlueprinSDK {
 
   get field() {
     return this._field;
+  }
+
+  get preferences(): PreferencesManager {
+    return this._preferences;
   }
 
   async init() {
