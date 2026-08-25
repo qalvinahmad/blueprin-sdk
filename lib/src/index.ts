@@ -313,9 +313,31 @@ export {
   BlueprintSkeleton,
 } from './ui/index.js';
 
+// User Preferences & Notation
+export {
+  PreferencesManager,
+  DEFAULT_USER_PREFERENCES,
+  DATE_TIME_LOCALE_MAP,
+} from './preferences/index.js';
+export type {
+  UserPreferences,
+  TablePreferences,
+  DateTimePreferences,
+  AccessibilityPreferences,
+  AppearancePreferences,
+  AnimationPreferences,
+  ThemePreference,
+  LanguagePreference,
+  TableNumberSeparator,
+  TableNumericFontSize,
+  UnitSystemPreference,
+  PreferencesManagerConfig,
+} from './preferences/index.js';
+
 // Utils
 export {
   formatIDR,
+  formatNumberWithSeparator,
   formatDate,
   formatRelativeTime,
   cn,
@@ -324,6 +346,8 @@ export {
   deepClone,
   pick,
   omit,
+  throttle,
+  RateLimiter,
 } from './utils/index.js';
 
 // Public API Client & Errors
