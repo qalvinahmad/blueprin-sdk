@@ -4,6 +4,39 @@
 
 import { generateId } from '../utils/index.js';
 import { FormulaEngine } from './formula-engine.js';
+import {
+  CostAnomalyDetector,
+  detectCostAnomalies,
+  summarizeAnomalies,
+  DEFAULT_BENCHMARK_PRICES,
+  DEFAULT_FICTITIOUS_KEYWORDS,
+  SEVERITY_META,
+} from './cost-anomaly-detector.js';
+import type {
+  AnomalySeverity,
+  AnomalyType,
+  AnomalyFinding,
+  AnomalySummary,
+  BenchmarkPriceEntry,
+  CostAnomalyOptions,
+} from './cost-anomaly-types.js';
+
+export {
+  CostAnomalyDetector,
+  detectCostAnomalies,
+  summarizeAnomalies,
+  DEFAULT_BENCHMARK_PRICES,
+  DEFAULT_FICTITIOUS_KEYWORDS,
+  SEVERITY_META,
+};
+export type {
+  AnomalySeverity,
+  AnomalyType,
+  AnomalyFinding,
+  AnomalySummary,
+  BenchmarkPriceEntry,
+  CostAnomalyOptions,
+};
 
 export class RabClient {
   private _storage: any;
@@ -11,16 +44,23 @@ export class RabClient {
   private _events: any;
   private _logger: any;
   private _formulaEngine: any;
+  private _anomalyDetector: CostAnomalyDetector;
+
   constructor({ storage, hooks, events, logger }) {
     this._storage = storage;
     this._hooks = hooks;
     this._events = events;
     this._logger = logger;
     this._formulaEngine = new FormulaEngine({ hooks, logger });
+    this._anomalyDetector = new CostAnomalyDetector();
   }
 
   get formulas() {
     return this._formulaEngine;
+  }
+
+  get anomalyDetector(): CostAnomalyDetector {
+    return this._anomalyDetector;
   }
 
   async listItems(projectId) {
@@ -194,5 +234,38 @@ export class RabClient {
     (this._events.emit as any)('blueprin:rab:expanded', result);
 
     return result;
+  }
+
+  /**
+   * Run automated Cost Anomaly & BOQ Audit for a stored project.
+   */
+  async auditProject(
+    projectId: string,
+    options: CostAnomalyOptions = {}
+  ): Promise<{ findings: AnomalyFinding[]; summary: AnomalySummary }> {
+    const items = await this.listItems(projectId);
+    const findings = detectCostAnomalies(items, options);
+    const summary = summarizeAnomalies(findings, items.length);
+
+    (this._events.emit as any)('blueprin:rab:audited', {
+      projectId,
+      findings,
+      summary,
+      auditedAt: new Date().toISOString(),
+    });
+
+    return { findings, summary };
+  }
+
+  /**
+   * Direct anomaly audit helper for in-memory RAB / BOQ item lists.
+   */
+  detectAnomalies(
+    items: any[],
+    options: CostAnomalyOptions = {}
+  ): { findings: AnomalyFinding[]; summary: AnomalySummary } {
+    const findings = detectCostAnomalies(items, options);
+    const summary = summarizeAnomalies(findings, items.length);
+    return { findings, summary };
   }
 }
