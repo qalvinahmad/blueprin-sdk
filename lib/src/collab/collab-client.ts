@@ -44,6 +44,8 @@ import type {
 } from './types.js';
 import { COLLAB_ROLE_DEFINITIONS } from './types.js';
 
+import { VoiceCallClient } from './webrtc/index.js';
+
 export interface CollabClientOptions {
   storage: any;
   events: any;
@@ -59,6 +61,7 @@ export class CollabClient {
   private _currentRoom: CollabRoom | null = null;
   private _currentUser: CollabUser | null = null;
   private _transport: CollabTransport | null = null;
+  private _voice: VoiceCallClient;
   private _vectorClock: Record<string, number> = {};
   private _documentState: CollabDocumentState | null = null;
   private _pendingOperations: CollabOperation[] = [];
@@ -68,6 +71,14 @@ export class CollabClient {
     this._events = events;
     this._baseUrl = baseUrl;
     this._headers = headers;
+    this._voice = new VoiceCallClient({ events: this._events, storage: this._storage });
+  }
+
+  /**
+   * WebRTC Voice Call and Media Mesh client instance.
+   */
+  get voice(): VoiceCallClient {
+    return this._voice;
   }
 
   // ─── Room Management ─────────────────────────────────────────────────────
@@ -118,6 +129,7 @@ export class CollabClient {
     await this._storage.set('collab_rooms', rooms);
     this._currentRoom = room;
     this._currentUser = fullUser;
+    this._voice.setUser(user.userId, user.name, user.avatar);
 
     this._events.emit('blueprin:collab:user:joined', { roomId, user: fullUser });
     return room;

@@ -42,3 +42,18 @@ export type {
   CollabChatMessage,
   SendChatMessagePayload,
 } from './types.js';
+
+// WebRTC Voice Calling & Media Mesh Signaling
+export { VoiceCallClient, DEFAULT_STUN_SERVERS } from './webrtc/index.js';
+export type {
+  VoiceCallClientConfig,
+  CallState,
+  CallParticipant,
+  IceServerConfig,
+  SignalingMessageType,
+  WebRTCSignalingMessage,
+  VoiceCallOptions,
+  VoiceCallEvents,
+  RTCIceCandidateInit,
+  RTCSessionDescriptionInit,
+} from './webrtc/index.js';

@@ -6,6 +6,7 @@
  * team chat, version history snapshots, and conflict-free CRDT editing.
  */
 import type { CollabRoom, CollabUser, CollabMessage, CollabOperation, CollabDocumentState, CollabTransportConfig, CollabTransportEvents, CollabRoleName, CollabPermissionKey, CollabRoleDefinition, CollabCollaborator, CollabInviteResult, CreateCollabSessionOptions, CollabSession, ValidateCollabSessionResult, CollabPresence, CollabCursorData, CollabComment, AddCommentOptions, CollabDocumentSnapshot, SaveDocumentSnapshotOptions, CollabChangeHistoryItem, CollabChatMessage, SendChatMessagePayload } from './types.js';
+import { VoiceCallClient } from './webrtc/index.js';
 export interface CollabClientOptions {
     storage: any;
     events: any;
@@ -20,10 +21,15 @@ export declare class CollabClient {
     private _currentRoom;
     private _currentUser;
     private _transport;
+    private _voice;
     private _vectorClock;
     private _documentState;
     private _pendingOperations;
     constructor({ storage, events, baseUrl, headers }: CollabClientOptions);
+    /**
+     * WebRTC Voice Call and Media Mesh client instance.
+     */
+    get voice(): VoiceCallClient;
     /**
      * Create a new collaborative session room for a project.
      */

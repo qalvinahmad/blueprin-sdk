@@ -220,10 +220,12 @@ export type {
   BimModel,
 } from './bim/index.js';
 
-// Real-time Collaboration
+// Real-time Collaboration & WebRTC Voice Calling
 export {
   CollabClient,
   CollabTransport,
+  VoiceCallClient,
+  DEFAULT_STUN_SERVERS,
   COLLAB_ROLE_DEFINITIONS,
   createOperation,
   applyOperation,
@@ -260,6 +262,16 @@ export type {
   CollabChatMessage,
   SendChatMessagePayload,
   CollabClientOptions,
+  VoiceCallClientConfig,
+  CallState,
+  CallParticipant,
+  IceServerConfig,
+  SignalingMessageType,
+  WebRTCSignalingMessage,
+  VoiceCallOptions,
+  VoiceCallEvents,
+  RTCIceCandidateInit,
+  RTCSessionDescriptionInit,
 } from './collab/index.js';
 
 // Mobile / Field Inspection
