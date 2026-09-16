@@ -44,6 +44,12 @@
 
 The official SDK for building **plugins**, **connectors**, **extensions** and **integrations** for [Blueprin](blueprin-app.vercel.app) — the professional architectural budgeting platform for construction in Indonesia.
 
+The headless SDK runs in web apps, SSR applications, React Native, Node.js,
+browser extensions, plugins, and connectors. The included `ui` module is
+web/DOM-specific; React Native applications should provide native presentation
+components over the same clients. See
+[`docs/platform-support.md`](docs/platform-support.md).
+
 ## Why Blueprin SDK?
 
 Build production-ready extensions for Blueprin without reimplementing its core infrastructure.
@@ -194,6 +200,13 @@ import { definePlugin } from '@alvinahmad/blueprin-sdk/core';
 import { ProjectClient } from '@alvinahmad/blueprin-sdk/project';
 import { IKKClient } from '@alvinahmad/blueprin-sdk/ikk';
 ```
+
+The same ESM/CommonJS/TypeScript contract is available for `auth`, `bim`,
+`client`, `collab`, `connector`, `core`, `events`, `field`, `formula`, `hooks`,
+`license`, `marketplace`, `material`, `openrouter`, `preferences`, `project`,
+`rab`, `report`, `schedule`, `schemas`, `storage`, `takeoff`, `telemetry`, `ui`,
+`utils`, `webhook`, and `workforce`. See
+[`docs/api-reference.md`](docs/api-reference.md) for browser and SSR guidance.
 
 ## Features
 

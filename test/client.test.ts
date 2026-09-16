@@ -49,6 +49,22 @@ describe('BlueprinClient & Public API Subclients', () => {
     expect(result.data[0].kode).toBe('AHS-01');
   });
 
+  it('supports short-lived bearer tokens for app clients', async () => {
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      headers: new Headers(),
+      text: async () => JSON.stringify({ success: true, data: [] }),
+    });
+
+    const client = new BlueprinClient({ authToken: 'session-token' });
+    await client.ahs.list();
+
+    const calledOpts = (globalThis.fetch as any).mock.calls[0][1];
+    expect(calledOpts.headers.Authorization).toBe('Bearer session-token');
+    expect(calledOpts.headers['X-API-Key']).toBeUndefined();
+  });
+
   it('handles 401 Unauthorized by throwing AuthenticationError', async () => {
     globalThis.fetch = vi.fn().mockResolvedValue({
       ok: false,

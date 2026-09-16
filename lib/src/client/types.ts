@@ -3,7 +3,14 @@
  */
 
 export interface BlueprinClientOptions {
-  apiKey: string;
+  /** Server-issued short-lived token. Preferred for browser applications. */
+  authToken?: string;
+  /** API key for trusted server-side callers, or public scoped keys. */
+  apiKey?: string;
+  /** Explicitly allow sending apiKey from a browser context. */
+  allowBrowserApiKey?: boolean;
+  /** Optional callback used by browser apps to exchange a session for a token. */
+  tokenProvider?: () => string | Promise<string>;
   baseUrl?: string;
   timeoutMs?: number;
   maxRetries?: number;

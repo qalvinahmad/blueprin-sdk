@@ -79,6 +79,7 @@ export declare class TelemetryManager {
     disable(): void;
     isEnabled(): boolean;
     track(eventName: string, payload?: Record<string, any>, options?: TelemetryTrackOptions): Promise<TelemetryEventPayload | null>;
+    private _sanitizePayload;
     recordMetric(pluginId: string, metricName: string, value: number, unit?: string, tags?: Record<string, any>): void;
     startTimer(pluginId: string, timerName: string): () => number;
     reportHealth(pluginId: string, status: HealthStatus, metadata?: Record<string, any>): void;

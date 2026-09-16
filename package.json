@@ -115,13 +115,55 @@
       "types": "./lib/field/index.d.ts",
       "import": "./lib/field/index.mjs",
       "require": "./lib/field/index.js"
+    },
+    "./auth": {
+      "types": "./lib/auth/index.d.ts",
+      "import": "./lib/auth/index.mjs",
+      "require": "./lib/auth/index.js"
+    },
+    "./formula": {
+      "types": "./lib/formula/index.d.ts",
+      "import": "./lib/formula/index.mjs",
+      "require": "./lib/formula/index.js"
+    },
+    "./ikk": {
+      "types": "./lib/ikk/index.d.ts",
+      "import": "./lib/ikk/index.mjs",
+      "require": "./lib/ikk/index.js"
+    },
+    "./license": {
+      "types": "./lib/license/index.d.ts",
+      "import": "./lib/license/index.mjs",
+      "require": "./lib/license/index.js"
+    },
+    "./preferences": {
+      "types": "./lib/preferences/index.d.ts",
+      "import": "./lib/preferences/index.mjs",
+      "require": "./lib/preferences/index.js"
+    },
+    "./schemas": {
+      "types": "./lib/schemas/index.d.ts",
+      "import": "./lib/schemas/index.mjs",
+      "require": "./lib/schemas/index.js"
+    },
+    "./utils": {
+      "types": "./lib/utils/index.d.ts",
+      "import": "./lib/utils/index.mjs",
+      "require": "./lib/utils/index.js"
+    },
+    "./webhook/browser": {
+      "types": "./lib/webhook/browser.d.ts",
+      "import": "./lib/webhook/browser/index.mjs",
+      "require": "./lib/webhook/browser/index.js"
     }
   },
   "engines": {
     "node": ">=18.0.0"
   },
   "files": [
-    "lib/",
+    "lib/**/*.js",
+    "lib/**/*.mjs",
+    "lib/**/*.d.ts",
     "LICENSE",
     "README.md"
   ],
@@ -131,13 +173,17 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "test:package": "npm run build && node scripts/verify-package.mjs",
     "typecheck": "tsc --noEmit",
-    "lint": "tsc --noEmit",
+    "lint": "eslint .",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
     "blueprin",
     "sdk",
+    "react-native",
+    "web",
+    "browser",
     "plugin",
     "connector",
     "construction",
@@ -160,8 +206,11 @@
     "@types/node": "^20.17.0",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
+    "@typescript-eslint/eslint-plugin": "^8.70.0",
+    "@typescript-eslint/parser": "^8.70.0",
     "@vitest/coverage-v8": "^3.2.7",
     "esbuild": "^0.25.0",
+    "eslint": "^10.10.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "typescript": "^5.8.3",

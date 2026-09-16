@@ -4,7 +4,9 @@ import { MaterialsClient } from './materials-client.js';
 import { RabClient } from './rab-client.js';
 import { PlansClient } from './plans-client.js';
 export declare class BlueprinClient {
-    private apiKey;
+    private apiKey?;
+    private authToken?;
+    private tokenProvider?;
     private baseUrl;
     private timeoutMs;
     private maxRetries;

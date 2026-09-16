@@ -24,6 +24,8 @@ export declare class VoiceCallClient {
     private _peerConnections;
     private _localStream;
     private _iceServers;
+    private _allowMock;
+    private _reconnectOnIceFailure;
     private _customSignalingHandler?;
     private _listeners;
     constructor({ events, storage, defaultIceServers }: VoiceCallClientConfig);

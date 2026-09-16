@@ -41,6 +41,9 @@ export class CollabTransport {
 
     try {
       const url = new URL(this._config.url);
+      if (typeof window !== 'undefined' && url.protocol !== 'wss:' && url.hostname !== 'localhost') {
+        throw new Error('Browser collaboration transports must use wss://, except for localhost development.');
+      }
       url.searchParams.set('token', this._config.token);
 
       this._ws = new WebSocket(url.toString());

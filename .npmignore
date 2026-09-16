@@ -1,0 +1,14 @@
+lib/src/
+lib/**/*.map
+coverage/
+test/
+example/
+docs/
+.github/
+scripts/
+*.config.*
+tsconfig.json
+vitest.config.mjs
+CONTRIBUTING.md
+SECURITY.md
+CHANGELOG.md

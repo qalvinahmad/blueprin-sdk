@@ -6,16 +6,59 @@ function isBrowser() {
   return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
 }
 
+interface StorageAdapterOptions {
+  prefix?: string;
+  supabaseClient?: any;
+  supabaseUrl?: string;
+  supabaseKey?: string;
+  adapter?: StorageAdapterDriver;
+  logger?: { warn?: (...args: any[]) => void; error?: (...args: any[]) => void };
+  onError?: (error: StorageError) => void;
+  useIndexedDB?: boolean;
+}
+
+export interface StorageAdapterDriver {
+  get(key: string): Promise<unknown> | unknown;
+  set(key: string, value: unknown): Promise<void> | void;
+  remove?(key: string): Promise<void> | void;
+  has?(key: string): Promise<boolean> | boolean;
+  keys?(): Promise<string[]> | string[];
+  clear?(): Promise<void> | void;
+}
+
+export class StorageError extends Error {
+  constructor(message: string, public readonly operation: string, options?: { cause?: unknown }) {
+    super(message, options);
+    this.name = 'StorageError';
+  }
+}
+
 export class StorageAdapter {
   private _prefix: any;
   private _supabase: any;
   private _cache: any;
   private _initialized: any;
-  constructor({ prefix = 'blueprin_sdk', supabaseClient, supabaseUrl, supabaseKey }) {
+  private _logger: StorageAdapterOptions['logger'];
+  private _onError?: StorageAdapterOptions['onError'];
+  private _useIndexedDB: boolean;
+  private _dbPromise: Promise<IDBDatabase> | null = null;
+  private _adapter?: StorageAdapterDriver;
+  constructor({
+    prefix = 'blueprin_sdk',
+    supabaseClient,
+    logger,
+    onError,
+    useIndexedDB = true,
+    adapter,
+  }: StorageAdapterOptions = {}) {
     this._prefix = prefix;
     this._supabase = supabaseClient || null;
     this._cache = new Map();
     this._initialized = false;
+    this._logger = logger;
+    this._onError = onError;
+    this._useIndexedDB = useIndexedDB;
+    this._adapter = adapter;
   }
 
   async init() {
@@ -27,7 +70,19 @@ export class StorageAdapter {
       return this._cache.get(key);
     }
 
-    if (isBrowser()) {
+    if (this._adapter) {
+      const stored = await this._adapter.get(this._key(key));
+      if (stored !== undefined) {
+        this._cache.set(key, stored);
+        return stored;
+      }
+    } else if (this._canUseIndexedDB()) {
+      const stored = await this._idbGet(key);
+      if (stored !== undefined) {
+        this._cache.set(key, stored);
+        return stored;
+      }
+    } else if (isBrowser()) {
       try {
         const raw = localStorage.getItem(this._key(key));
         if (raw !== null) {
@@ -35,8 +90,8 @@ export class StorageAdapter {
           this._cache.set(key, value);
           return value;
         }
-      } catch {
-        // localStorage might be full or corrupted
+      } catch (error) {
+        this._reportError('get', error);
       }
     }
 
@@ -48,11 +103,15 @@ export class StorageAdapter {
     this._cache.set(key, value);
 
     // 1. Sync to LocalStorage (Fast & Offline)
-    if (isBrowser()) {
+    if (this._adapter) {
+      await this._adapter.set(this._key(key), value);
+    } else if (this._canUseIndexedDB()) {
+      await this._idbSet(key, value);
+    } else if (isBrowser()) {
       try {
         localStorage.setItem(this._key(key), JSON.stringify(value));
-      } catch {
-        // Storage full or unavailable
+      } catch (error) {
+        this._reportError('set', error);
       }
     }
 
@@ -70,11 +129,24 @@ export class StorageAdapter {
     const sync = options.sync || false;
     this._cache.delete(key);
 
-    if (isBrowser()) {
+    if (this._adapter) {
+      await this._adapter.remove?.(this._key(key));
+    } else if (this._canUseIndexedDB()) {
+      try {
+        const db = await this._openDB();
+        await new Promise<void>((resolve, reject) => {
+          const request = db.transaction('values', 'readwrite').objectStore('values').delete(this._key(key));
+          request.onsuccess = () => resolve();
+          request.onerror = () => reject(request.error);
+        });
+      } catch (error) {
+        this._reportError('remove', error);
+      }
+    } else if (isBrowser()) {
       try {
         localStorage.removeItem(this._key(key));
-      } catch {
-        // ignore
+      } catch (error) {
+        this._reportError('remove', error);
       }
     }
 
@@ -86,6 +158,13 @@ export class StorageAdapter {
 
   async has(key) {
     if (this._cache.has(key)) return true;
+
+    if (this._adapter) {
+      return this._adapter.has ? await this._adapter.has(this._key(key)) : (await this._adapter.get(this._key(key))) !== undefined;
+    }
+    if (this._canUseIndexedDB()) {
+      return (await this._idbGet(key)) !== undefined;
+    }
 
     if (isBrowser()) {
       try {
@@ -100,6 +179,11 @@ export class StorageAdapter {
 
   async keys() {
     const keys: string[] = [];
+
+    const adapter = this._adapter;
+    if (adapter && adapter.keys) {
+      return adapter.keys();
+    }
 
     if (isBrowser()) {
       try {
@@ -120,7 +204,20 @@ export class StorageAdapter {
   async clear() {
     this._cache.clear();
 
-    if (isBrowser()) {
+    if (this._adapter) {
+      await this._adapter.clear?.();
+    } else if (this._canUseIndexedDB()) {
+      try {
+        const db = await this._openDB();
+        await new Promise<void>((resolve, reject) => {
+          const request = db.transaction('values', 'readwrite').objectStore('values').clear();
+          request.onsuccess = () => resolve();
+          request.onerror = () => reject(request.error);
+        });
+      } catch (error) {
+        this._reportError('clear', error);
+      }
+    } else if (isBrowser()) {
       const keysToRemove: string[] = [];
       try {
         for (let i = 0; i < localStorage.length; i++) {
@@ -128,11 +225,63 @@ export class StorageAdapter {
           if (k && k.startsWith(this._prefix + ':')) {
             keysToRemove.push(k);
           }
+
         }
         keysToRemove.forEach((k) => localStorage.removeItem(k));
-      } catch {
-        // ignore
+      } catch (error) {
+        this._reportError('clear', error);
       }
+    }
+  }
+
+  private _canUseIndexedDB(): boolean {
+    return this._useIndexedDB && typeof indexedDB !== 'undefined';
+  }
+
+  private _reportError(operation: string, cause: unknown): void {
+    const error = new StorageError(`Storage ${operation} failed`, operation, { cause });
+    this._logger?.warn?.(error.message, cause);
+    this._onError?.(error);
+  }
+
+  private _openDB(): Promise<IDBDatabase> {
+    if (this._dbPromise) return this._dbPromise;
+    this._dbPromise = new Promise<IDBDatabase>((resolve, reject) => {
+      const request = indexedDB.open(`${this._prefix}:store`, 1);
+      request.onupgradeneeded = () => request.result.createObjectStore('values');
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    }).catch((error) => {
+      this._reportError('open', error);
+      throw error;
+    });
+    return this._dbPromise!;
+  }
+
+  private async _idbGet(key: string): Promise<any> {
+    try {
+      const db = await this._openDB();
+      return await new Promise((resolve, reject) => {
+        const request = db.transaction('values', 'readonly').objectStore('values').get(this._key(key));
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    } catch (error) {
+      this._reportError('get', error);
+      return undefined;
+    }
+  }
+
+  private async _idbSet(key: string, value: any): Promise<void> {
+    try {
+      const db = await this._openDB();
+      await new Promise<void>((resolve, reject) => {
+        const request = db.transaction('values', 'readwrite').objectStore('values').put(value, this._key(key));
+        request.onsuccess = () => resolve();
+        request.onerror = () => reject(request.error);
+      });
+    } catch (error) {
+      this._reportError('set', error);
     }
   }
 
