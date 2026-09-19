@@ -44,6 +44,25 @@ describe('StorageAdapter extended paths', () => {
     expect(await scoped.has('name')).toBe(false);
   });
 
+  it('supports an async adapter for React Native and extension storage', async () => {
+    const values = new Map<string, unknown>();
+    const nativeAdapter = new StorageAdapter({
+      prefix: 'native',
+      adapter: {
+        get: (key) => values.get(key),
+        set: (key, value) => { values.set(key, value); },
+        remove: (key) => { values.delete(key); },
+        has: (key) => values.has(key),
+      },
+    });
+
+    await nativeAdapter.set('project', { id: 'p1' });
+    expect(await nativeAdapter.get('project')).toEqual({ id: 'p1' });
+    expect(await nativeAdapter.has('project')).toBe(true);
+    await nativeAdapter.remove('project');
+    expect(await nativeAdapter.has('project')).toBe(false);
+  });
+
   it('should handle syncToSupabase when no supabase client', async () => {
     // Should not throw
     await adapter.syncToSupabase('table', 'id', { data: 1 });

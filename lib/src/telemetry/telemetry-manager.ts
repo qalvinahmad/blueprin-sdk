@@ -168,7 +168,7 @@ export class TelemetryManager {
 
     const eventData: TelemetryEventPayload = {
       event: eventName,
-      payload: { ...payload },
+      payload: this._sanitizePayload(payload),
       appId: this._appId,
       pluginId: options.pluginId || payload.pluginId || null,
       timestamp: Date.now(),
@@ -182,6 +182,7 @@ export class TelemetryManager {
         if (result && typeof (result as Promise<void>).then === 'function') {
           await (result as Promise<void>).catch(() => {});
         }
+
       } catch {
         // handler errors should not break telemetry
       }
@@ -197,6 +198,16 @@ export class TelemetryManager {
     }
 
     return eventData;
+  }
+
+  private _sanitizePayload(payload: Record<string, any>): Record<string, any> {
+    const sensitive = /token|secret|password|api[-_]?key|authorization|cookie/i;
+    return Object.fromEntries(
+      Object.entries(payload).map(([key, value]) => [
+        key,
+        sensitive.test(key) ? '[REDACTED]' : value,
+      ])
+    );
   }
 
   recordMetric(

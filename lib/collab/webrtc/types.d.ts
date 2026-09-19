@@ -51,6 +51,10 @@ export interface VoiceCallOptions {
     autoAnswer?: boolean;
     /** Custom signaling send handler */
     onSendSignaling?: (msg: WebRTCSignalingMessage) => void | Promise<void>;
+    /** Permit the in-memory mock only for tests/non-browser development. */
+    allowMock?: boolean;
+    /** Recreate a failed peer connection after ICE failure. */
+    reconnectOnIceFailure?: boolean;
 }
 export interface VoiceCallEvents {
     onStateChange?: (state: CallState) => void;

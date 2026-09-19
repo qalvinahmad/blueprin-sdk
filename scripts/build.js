@@ -31,6 +31,12 @@ async function buildModule(name) {
   if (!require('fs').existsSync(entry)) {
     entry = join(SRC, name, 'index.tsx');
   }
+  if (!require('fs').existsSync(entry)) {
+    entry = join(SRC, `${name}.ts`);
+  }
+  if (!require('fs').existsSync(entry)) {
+    entry = join(SRC, `${name}.tsx`);
+  }
   const outDir = join(OUT, name);
 
   mkdirSync(outDir, { recursive: true });
@@ -87,6 +93,7 @@ async function buildAll() {
   for (const mod of modules) {
     await buildModule(mod);
   }
+  await buildModule('webhook/browser');
 
   console.log('  Generating Type Declarations (tsc)...');
   try {

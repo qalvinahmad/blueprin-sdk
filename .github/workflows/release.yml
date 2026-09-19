@@ -37,6 +37,9 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Verify package consumers
+        run: npm run test:package
+
       - name: Extract version
         id: version
         run: echo "tag=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
@@ -85,11 +88,10 @@ jobs:
 
       - name: Publish to npm
         run: |
-          if [ -n "$NODE_AUTH_TOKEN" ]; then
-            npm publish --provenance --access public || echo "npm publish completed or skipped"
-          else
-            echo "NPM_TOKEN not set, performing dry-run"
-            npm publish --dry-run
-          fi
+          test -n "$NODE_AUTH_TOKEN" || {
+            echo "::error::NPM_TOKEN is required for a release publish"
+            exit 1
+          }
+          npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

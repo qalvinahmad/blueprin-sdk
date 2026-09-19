@@ -57,11 +57,12 @@ export class BlueprinSDK {
       storagePrefix = 'blueprin_sdk',
       debug = false,
       supabaseClient,
-      telemetryEnabled = true,
+      telemetryEnabled = false,
       // Backward-compatible aliases (used by main app plugin-host-context)
       apiUrl,
       config,
       logger: loggerOption,
+      storageAdapter,
     } = options;
 
     // Resolve backward-compatible config nesting
@@ -73,11 +74,12 @@ export class BlueprinSDK {
     const loggerPrefix = loggerOption?.prefix || `[BlueprinSDK:${appId}]`;
     this._logger = new Logger({ prefix: loggerPrefix, debug: resolvedDebug });
     this._config = new ConfigManager({ appId, storagePrefix });
-    this._storage = new StorageAdapter({
+    this._storage = storageAdapter || new StorageAdapter({
       prefix: storagePrefix,
       supabaseClient,
       supabaseUrl: resolvedSupabaseUrl,
       supabaseKey: resolvedSupabaseKey,
+      logger: this._logger,
     });
     this._eventBus = new EventBus({ logger: this._logger });
     this._hookRegistry = new HookRegistry({ logger: this._logger });

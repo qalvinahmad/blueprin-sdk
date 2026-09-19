@@ -115,3 +115,25 @@ describe('Plugin with Supabase', () => {
   });
 });
 ```
+# Testing
+
+## Local checks
+
+```bash
+npm run typecheck
+npm run lint
+npm run test
+npm run test:package
+```
+
+`test:package` builds the SDK and loads every declared package export through
+both CommonJS and ESM entry points. This catches missing files and broken
+subpath exports before publishing.
+
+## External integrations
+
+Tests for Supabase, public API, OpenRouter, connectors, webhooks, and
+WebSocket/WebRTC services should run against a disposable staging environment
+and be kept separate from the deterministic unit suite. Do not put production
+credentials in CI; use short-lived secrets and an explicit integration job
+when those services are available.

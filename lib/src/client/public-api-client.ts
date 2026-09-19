@@ -12,7 +12,9 @@ import { RabClient } from './rab-client.js';
 import { PlansClient } from './plans-client.js';
 
 export class BlueprinClient {
-  private apiKey: string;
+  private apiKey?: string;
+  private authToken?: string;
+  private tokenProvider?: BlueprinClientOptions['tokenProvider'];
   private baseUrl: string;
   private timeoutMs: number;
   private maxRetries: number;
@@ -24,12 +26,25 @@ export class BlueprinClient {
   public plans: PlansClient;
 
   constructor(options: BlueprinClientOptions) {
-    if (!options?.apiKey) {
-      throw new AuthenticationError('API Key must be provided to instantiate BlueprinClient.');
+    if (!options?.apiKey && !options?.authToken && !options?.tokenProvider) {
+      throw new AuthenticationError('An authToken, tokenProvider, or API key must be provided to instantiate BlueprinClient.');
     }
 
-    this.apiKey = options.apiKey.trim();
+    const isBrowserOrReactNative =
+      typeof window !== 'undefined' ||
+      typeof navigator !== 'undefined' && navigator.product === 'ReactNative';
+    if (isBrowserOrReactNative && options.apiKey && !options.allowBrowserApiKey) {
+      throw new AuthenticationError(
+        'Browser API keys are disabled. Use authToken/tokenProvider, or explicitly set allowBrowserApiKey for a public scoped key.'
+      );
+    }
+    this.apiKey = options.apiKey?.trim();
+    this.authToken = options.authToken?.trim();
+    this.tokenProvider = options.tokenProvider;
     this.baseUrl = (options.baseUrl || 'https://blueprin-app.vercel.app').replace(/\/+$/, '');
+    if (isBrowserOrReactNative && !/^https:\/\/|^http:\/\/localhost(?::\d+)?\//.test(`${this.baseUrl}/`)) {
+      throw new Error('Browser API baseUrl must use HTTPS, except for localhost development.');
+    }
     this.timeoutMs = options.timeoutMs || 15000;
     this.maxRetries = options.maxRetries ?? 2;
     this.retryDelayMs = options.retryDelayMs ?? 1000;
@@ -80,7 +95,10 @@ export class BlueprinClient {
           Accept: 'application/json',
         };
 
-        if (authenticated) {
+        const token = this.tokenProvider ? await this.tokenProvider() : this.authToken;
+        if (authenticated && token) {
+          headers.Authorization = `Bearer ${token}`;
+        } else if (authenticated && this.apiKey) {
           headers['X-API-Key'] = this.apiKey;
         }
 

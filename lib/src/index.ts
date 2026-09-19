@@ -15,7 +15,8 @@ export { BlueprinSDK } from './core/sdk.js';
 export { PluginManager } from './core/plugin-manager.js';
 export { EventBus } from './core/event-bus.js';
 export { HookRegistry } from './core/hook-registry.js';
-export { StorageAdapter } from './core/storage-adapter.js';
+export { StorageAdapter, StorageError } from './core/storage-adapter.js';
+export type { StorageAdapterDriver } from './core/storage-adapter.js';
 export { Logger } from './core/logger.js';
 export { ConfigManager } from './core/config-manager.js';
 export {

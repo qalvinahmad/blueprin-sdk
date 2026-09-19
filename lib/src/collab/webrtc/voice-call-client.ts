@@ -38,6 +38,8 @@ export class VoiceCallClient {
   private _peerConnections: Map<string, any> = new Map();
   private _localStream: any = null;
   private _iceServers: IceServerConfig[];
+  private _allowMock = false;
+  private _reconnectOnIceFailure = true;
   private _customSignalingHandler?: (msg: WebRTCSignalingMessage) => void | Promise<void>;
   private _listeners: VoiceCallEvents = {};
 
@@ -96,6 +98,8 @@ export class VoiceCallClient {
 
     this._currentRoomId = roomId;
     if (options.iceServers) this._iceServers = options.iceServers;
+    this._allowMock = options.allowMock ?? typeof window === 'undefined';
+    this._reconnectOnIceFailure = options.reconnectOnIceFailure ?? true;
     if (options.onSendSignaling) this._customSignalingHandler = options.onSendSignaling;
 
     this._setCallState('requesting');
@@ -151,6 +155,8 @@ export class VoiceCallClient {
     }
 
     if (options.iceServers) this._iceServers = options.iceServers;
+    this._allowMock = options.allowMock ?? typeof window === 'undefined';
+    this._reconnectOnIceFailure = options.reconnectOnIceFailure ?? true;
     if (options.onSendSignaling) this._customSignalingHandler = options.onSendSignaling;
 
     this._setCallState('requesting');
@@ -442,8 +448,19 @@ export class VoiceCallClient {
         }
       };
 
+      pc.oniceconnectionstatechange = () => {
+        if (pc.iceConnectionState === 'failed' && this._reconnectOnIceFailure) {
+          pc.restartIce?.();
+          this._events.emit('blueprin:voice:ice:failed', { peerId });
+        }
+      };
+
       this._peerConnections.set(peerId, pc);
       return pc;
+    }
+
+    if (!this._allowMock) {
+      throw new Error('WebRTC is unavailable. Use a secure browser context with RTCPeerConnection or enable allowMock for tests.');
     }
 
     // Lightweight mock for non-browser / test runs
