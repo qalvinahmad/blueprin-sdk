@@ -204,14 +204,14 @@
   },
   "devDependencies": {
     "@types/node": "^20.17.0",
-    "@types/react": "^18.3.18",
+    "@types/react": "^19.3.0",
     "@types/react-dom": "^18.3.5",
     "@typescript-eslint/eslint-plugin": "^8.70.0",
     "@typescript-eslint/parser": "^8.70.0",
     "@vitest/coverage-v8": "^3.2.7",
     "esbuild": "^0.25.0",
     "eslint": "^10.10.0",
-    "react": "^18.3.1",
+    "react": "^19.3.0",
     "react-dom": "^18.3.1",
     "typescript": "^5.8.3",
     "vitest": "^3.2.1"
