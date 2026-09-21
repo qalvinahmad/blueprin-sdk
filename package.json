@@ -203,7 +203,7 @@
     "url": "https://github.com/qalvinahmad/blueprin-sdk/issues"
   },
   "devDependencies": {
-    "@types/node": "^20.17.0",
+    "@types/node": "^26.6.1",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@typescript-eslint/eslint-plugin": "^8.70.0",
