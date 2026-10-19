@@ -19,6 +19,7 @@
 
 ## Testing
 - [ ] I have added/updated tests for my changes
+- [ ] I have added a regression test that reproduces the bug before the fix (bug fixes only)
 - [ ] All existing tests pass (`npm test`)
 - [ ] Build succeeds (`npm run build`)
 

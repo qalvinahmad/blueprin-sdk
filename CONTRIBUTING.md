@@ -65,6 +65,13 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/):
 4. Run `npm run build` then `npm test` and `npm run lint`
 5. Submit a PR with a clear description
 
+## Fixing Bugs
+
+For a bug fix, add a regression test that fails before the fix and passes after it.
+Keep the test focused on the reported behavior so a future change cannot reintroduce
+the same issue unnoticed. If a regression test is not practical, explain why in the
+pull request description.
+
 ## Code Style
 
 - Use JSDoc for all public APIs
