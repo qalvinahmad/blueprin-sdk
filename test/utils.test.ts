@@ -281,10 +281,16 @@ describe('RateLimiter', () => {
   });
 
   it('should reset after window expires', () => {
-    const limiter = new RateLimiter(1, 50); // 50ms window
-    expect(limiter.checkLimit('api1')).toBe(true);
-    expect(limiter.checkLimit('api1')).toBe(false);
-    // Note: Cannot reliably test window expiry without fake timers
-    // The filter logic removes expired timestamps, so after window passes, new calls are allowed
+    vi.useFakeTimers();
+    try {
+      const limiter = new RateLimiter(1, 50);
+      expect(limiter.checkLimit('api1')).toBe(true);
+      expect(limiter.checkLimit('api1')).toBe(false);
+      vi.advanceTimersByTime(51);
+      expect(limiter.checkLimit('api1')).toBe(true);
+      expect(limiter.checkLimit('api1')).toBe(false);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });
